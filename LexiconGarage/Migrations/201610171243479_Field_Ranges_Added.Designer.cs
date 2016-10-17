@@ -7,13 +7,13 @@ namespace LexiconGarage.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class Init : IMigrationMetadata
+    public sealed partial class Field_Ranges_Added : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Init));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Field_Ranges_Added));
         
         string IMigrationMetadata.Id
         {
-            get { return "201610170944205_Init"; }
+            get { return "201610171243479_Field_Ranges_Added"; }
         }
         
         string IMigrationMetadata.Source

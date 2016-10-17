@@ -47,10 +47,10 @@ namespace LexiconGarage.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Type,RegNo,Color,ParkingTime,NumberOfWheels,Brand,Model,Weight")] Vehicle vehicle)
+        public ActionResult Create([Bind(Include = "Id,Type,RegNo,Color,NumberOfWheels,Brand,Model,Weight")] Vehicle vehicle)
         {
-            if (ModelState.IsValid)
-            {
+            if (ModelState.IsValid) {
+                vehicle.ParkingTime = new DateTime(); // Annika: Mergea in Roberts istället!!XXX
                 db.Vehicles.Add(vehicle);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -79,7 +79,7 @@ namespace LexiconGarage.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Type,RegNo,Color,ParkingTime,NumberOfWheels,Brand,Model,Weight")] Vehicle vehicle)
+        public ActionResult Edit([Bind(Include = "Id,Type,RegNo,Color,NumberOfWheels,Brand,Model,Weight")] Vehicle vehicle)
         {
             if (ModelState.IsValid)
             {
