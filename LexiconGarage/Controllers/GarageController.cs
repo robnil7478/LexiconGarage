@@ -108,7 +108,7 @@ namespace LexiconGarage.Controllers
         // POST: Garage/Delete/5
         [HttpPost, ActionName("CheckOut")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult CheckOutConfirmed(int id)
         {
             Vehicle vehicle = db.Vehicles.Find(id);
             db.Vehicles.Remove(vehicle);

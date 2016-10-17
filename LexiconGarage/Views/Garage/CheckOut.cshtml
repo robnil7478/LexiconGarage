@@ -1,14 +1,13 @@
 ﻿@model LexiconGarage.Models.Vehicle
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Hämta ut";
 }
 
-<h2>Delete</h2>
+<h3>Hämta / Checka ut</h3>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Följande fordon kommer att tas bort från garaget:</h3>
 <div>
-    <h4>Vehicle</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -81,8 +80,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Ta bort" class="btn btn-default" /> |
+            @Html.ActionLink("Tillbaka till fordonslistan", "Index")
         </div>
     }
 </div>
