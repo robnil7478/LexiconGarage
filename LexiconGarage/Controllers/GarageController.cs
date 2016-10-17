@@ -105,7 +105,7 @@ namespace LexiconGarage.Controllers
             return View(vehicle);
         }
 
-        // POST: Garage/Delete/5
+        // POST: Garage/Checkout/5
         [HttpPost, ActionName("CheckOut")]
         [ValidateAntiForgeryToken]
         public ActionResult CheckOutConfirmed(int id)
