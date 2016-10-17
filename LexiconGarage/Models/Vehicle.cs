@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
-using System.ComponentModel.DataAnnotations;
+
 namespace LexiconGarage.Models {
 
     public enum VehicleType {
@@ -43,6 +44,7 @@ namespace LexiconGarage.Models {
         } 
 
         [Display(Name = "Antal hjul")]
+        [Range(0, int.MaxValue, ErrorMessage = "Antalet hjul måste vara >= 0")]
         public int NumberOfWheels { get; set; }
 
         [Display(Name = "Märke")]
@@ -52,6 +54,7 @@ namespace LexiconGarage.Models {
         public string Model { get; set; }
 
         [Display(Name = "Vikt")]
+        [Range(0, int.MaxValue, ErrorMessage = "Vikten i kg, måste vara >= 0")]
         public int Weight { get; set; }
     }
 }
