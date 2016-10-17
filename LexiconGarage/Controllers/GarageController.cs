@@ -36,21 +36,21 @@ namespace LexiconGarage.Controllers
             return View(vehicle);
         }
 
-        // GET: Garage/Create
-        public ActionResult Create()
+        // GET: Garage/CheckIn
+        public ActionResult CheckIn()
         {
             return View();
         }
 
-        // POST: Garage/Create
+        // POST: Garage/CheckIn
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Type,RegNo,Color,NumberOfWheels,Brand,Model,Weight")] Vehicle vehicle)
+        public ActionResult CheckIn([Bind(Include = "Id,Type,RegNo,Color,NumberOfWheels,Brand,Model,Weight",Exclude = "ParkingTime")] Vehicle vehicle)
         {
-            if (ModelState.IsValid) {
-                vehicle.ParkingTime = new DateTime(); // Annika: Mergea in Roberts istället!!XXX
+            if (ModelState.IsValid)
+            {
                 db.Vehicles.Add(vehicle);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -79,7 +79,7 @@ namespace LexiconGarage.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Type,RegNo,Color,NumberOfWheels,Brand,Model,Weight")] Vehicle vehicle)
+        public ActionResult Edit([Bind(Exclude = "ParkingTime")] Vehicle vehicle)
         {
             if (ModelState.IsValid)
             {
@@ -90,8 +90,8 @@ namespace LexiconGarage.Controllers
             return View(vehicle);
         }
 
-        // GET: Garage/Delete/5
-        public ActionResult Delete(int? id)
+        // GET: Garage/CheckOut/5
+        public ActionResult CheckOut(int? id)
         {
             if (id == null)
             {
@@ -105,8 +105,8 @@ namespace LexiconGarage.Controllers
             return View(vehicle);
         }
 
-        // POST: Garage/Delete/5
-        [HttpPost, ActionName("Delete")]
+        // POST: Garage/Checkout/5
+        [HttpPost, ActionName("CheckOut")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {

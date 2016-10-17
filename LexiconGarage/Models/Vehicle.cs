@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 
 namespace LexiconGarage.Models {
+
     public enum VehicleType {
         [Display(Name ="Motorcykel")]
         MotorCycle,
@@ -18,28 +19,57 @@ namespace LexiconGarage.Models {
         Boat
     }
 
+    
+
     public class Vehicle {
+        private DateTime? dateCreated = null;
 
         public const string SweReqErrorString = "Detta fält är obligatoriskt";
 
         public int Id { get; set; }
+
+        [Display(Name = "Fordonstyp")]
         [Required(ErrorMessage = SweReqErrorString)]
         public VehicleType Type { get; set; }
+
+        [Display(Name = "Registreringsnummer")]
         [Required(ErrorMessage = SweReqErrorString)]
         [StringLength(6, MinimumLength = 6, ErrorMessage = "6 tecken, utan mellanslag")]
         public string RegNo { get; set; }
+
+        [Display(Name = "Färg")]
         [Required(ErrorMessage = SweReqErrorString)]
         public ConsoleColor Color { get; set; }
-        public DateTime ParkingTime { get; set; } //DateTime2 XXX?? 
+
+        [Display(Name = "Parkeringstid")]
+        public DateTime  ParkingTime {          //DateTime2 ??
+            get
+            {
+                return this.dateCreated.HasValue
+                   ? this.dateCreated.Value
+                   : DateTime.Now;
+            }
+
+            set { this.dateCreated = value; }
+
+        } 
+
+        [Display(Name = "Antal hjul")]
         [Required(ErrorMessage = SweReqErrorString)]
         [Range(0, int.MaxValue, ErrorMessage = "Antalet hjul måste vara >= 0")]
         public int NumberOfWheels { get; set; }
+
+        [Display(Name = "Märke")]
         [Required(ErrorMessage = SweReqErrorString)]
         [StringLength(30, MinimumLength = 1, ErrorMessage = "Max 30 tecken")]
         public string Brand { get; set; }
+
+        [Display(Name = "Modell")]
         [Required(ErrorMessage = SweReqErrorString)]
         [StringLength(30, MinimumLength = 1, ErrorMessage = "Max 30 tecken")]
         public string Model { get; set; }
+
+        [Display(Name = "Vikt")]
         [Required(ErrorMessage = SweReqErrorString)]
         [Range(1, int.MaxValue, ErrorMessage = "Vikten i kg, ett heltal > 0")]
         public int Weight { get; set; }
