@@ -45,13 +45,10 @@ namespace LexiconGarage.Models {
         public DateTime  ParkingTime {          //DateTime2 ??
             get
             {
-                return this.dateCreated.HasValue
-                   ? this.dateCreated.Value
-                   : DateTime.Now;
+                return this.dateCreated.HasValue ? this.dateCreated.Value : DateTime.Now;
             }
 
             set { this.dateCreated = value; }
-
         } 
 
         [Display(Name = "Antal hjul")]

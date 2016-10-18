@@ -116,6 +116,75 @@ namespace LexiconGarage.Controllers
             return RedirectToAction("Index");
         }
 
+
+        public ActionResult Search(string regNo, string brand, string color)
+        {
+            var anEmptyList = new List<Vehicle>();
+            var tuple = new Tuple<IEnumerable<Vehicle>, Vehicle>(anEmptyList, new Vehicle());
+            //return PartialView("Search", tuple);
+
+            return View("Search", tuple);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SearchVehicles([Bind(Include = "Id,Type,RegNo,Color,NumberOfWheels,Brand,Model,Weight")] Vehicle vehicle)
+        //public ActionResult SearchVehicles()
+        {
+            //string searchRegNo = Request.Form["Item2.RegNo"];
+            int intNumber;
+            bool result = false;
+
+            if (vehicle != null){
+                vehicle = new Vehicle();
+            }
+
+            vehicle.RegNo = string.IsNullOrEmpty(Request.Form["Item2.RegNo"]) ? "" : Request.Form["Item2.RegNo"];
+            vehicle.Brand = string.IsNullOrEmpty(Request.Form["Item2.Brand"]) ? "" : Request.Form["Item2.Brand"];
+
+            string strType = string.IsNullOrEmpty(Request.Form["Item2.Type"]) ? "" : Request.Form["Item2.Type"];
+            result = Int32.TryParse(strType, out intNumber);
+            if (result) {
+                vehicle.Type = (VehicleType)intNumber;
+            }
+
+            var subsetListOfVehicles = new List<Vehicle>();
+            if (vehicle.RegNo.Length > 0 || vehicle.Brand.Length > 0 || vehicle.Type.ToString().Length > 0)
+                subsetListOfVehicles = (from x in db.Vehicles.ToList()
+                                        where x.Type.ToString().ToUpper().Contains(vehicle.Type.ToString().ToUpper()) &&
+                                        x.Brand.ToUpper().Contains(vehicle.Brand.ToUpper()) &&
+                                        x.RegNo.ToUpper().Contains(vehicle.RegNo.ToUpper())
+                                        select x).ToList();
+
+            var tuple = new Tuple<IEnumerable<Vehicle>, Vehicle>(subsetListOfVehicles, vehicle);
+            return View("Search", tuple);
+        }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult GetAllVehicles(string RegNo, string brand, string color)
+        {
+            var tuple = new Tuple<IEnumerable<Vehicle>, Vehicle>(db.Vehicles.ToList(), new Vehicle());
+            return View("Search", tuple);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ResetSearch(string RegNo, string brand, string color)
+        {
+            var anEmptyList = new List<Vehicle>();
+
+            var tuple = new Tuple<IEnumerable<Vehicle>, Vehicle>(anEmptyList, new Vehicle());
+            return View("Search", tuple);
+        }
+
+        
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

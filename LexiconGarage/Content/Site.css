@@ -22,3 +22,10 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.dropdown-search{
+    height:28px;
+    width:175px;
+    max-width: 280px;
+}
+
