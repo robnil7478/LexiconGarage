@@ -1,5 +1,6 @@
 namespace LexiconGarage.Migrations
 {
+    using Models;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -26,6 +27,94 @@ namespace LexiconGarage.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+            //context.Vehicles.AddOrUpdate(
+            //      v => v.RegNo,
+            //      new Vehicle {
+            //          Type = VehicleType.Car,
+            //          RegNo = "boo124",
+            //          Owner = "Bo Ohlsson",
+            //          ParkingTime = new DateTime(2016, 10, 16, 10, 35, 15),
+            //          NumberOfWheels = 4,
+            //          Brand = "Volvo",
+            //          Model = "V40",
+            //          Weight = 2100
+            //      }
+            //      , new Vehicle {
+            //          Type = VehicleType.Car,
+            //          RegNo = "ann000",
+            //          Owner = "Anna Ohlsson",
+            //          ParkingTime = new DateTime(2016, 10, 1, 15, 0, 15),
+            //          NumberOfWheels = 4,
+            //          Brand = "Saab",
+            //          Model = "XX",
+            //          Weight = 2000
+            //      }
+            //      //, new Vehicle {
+            //      //    Type = VehicleType.Car,
+            //      //    RegNo = "ann00x",
+            //      //    Owner = "Anna Ohlsson",
+            //      //    ParkingTime = new DateTime(2016, 10, 1, 15, 0, 15),
+            //      //    NumberOfWheels = 4,
+            //      //    Brand = "Saab",
+            //      //    Model = "XX",
+            //      //    Weight = 2000
+            //      //}
+            //      //,
+            //      //new Vehicle {
+            //      //    Type = VehicleType.Bus,
+            //      //    RegNo = "bus126",
+            //      //    Owner = "SLx",
+            //      //    ParkingTime = new DateTime(2016, 10, 10, 15, 0, 15),
+            //      //    NumberOfWheels = 8,
+            //      //    Brand = "Saab",
+            //      //    Model = "B55",
+            //      //    Weight = 4500
+            //      //}
+            //      //,
+            //      //new Vehicle {
+            //      //    Type = VehicleType.MotorCycle,
+            //      //    RegNo = "mc1234",
+            //      //    Owner = "Anna Karlsson",
+            //      //    ParkingTime = new DateTime(2016, 9, 30, 10, 35, 15),
+            //      //    NumberOfWheels = 2,
+            //      //    Brand = "Toyota",
+            //      //    Model = "Speedy",
+            //      //    Weight = 200
+            //      //}
+            //      ,
+            //      new Vehicle {
+            //          Type = VehicleType.MotorCycle,
+            //          RegNo = "mc1235",
+            //          Owner = "Sanna Carlsson",
+            //          ParkingTime = new DateTime(2016, 9, 30, 12, 35, 15),
+            //          NumberOfWheels = 2,
+            //          Brand = "Toyota",
+            //          Model = "Speedy",
+            //          Weight = 200
+            //      }
+            //      ,
+            //      new Vehicle {
+            //          Type = VehicleType.AeroPlane,
+            //          RegNo = "airNex",
+            //          Owner = "SAS",
+            //          ParkingTime = new DateTime(2016, 10, 16, 22, 0, 0),
+            //          NumberOfWheels = 9,
+            //          Brand = "Boeing",
+            //          Model = "XX",
+            //          Weight = 8000
+            //      }
+            //      //,
+            //      //new Vehicle {
+            //      //    Type = VehicleType.Boat,
+            //      //    RegNo = "SS1234",
+            //      //    Owner = "Waxholmsbolaget",
+            //      //    ParkingTime = new DateTime(2016, 10, 16, 22, 0, 0),
+            //      //    NumberOfWheels = 12,
+            //      //    Brand = "SSSSS",
+            //      //    Model = "Steam3",
+            //      //    Weight = 8000
+            //      //}
+            //      );
         }
     }
 }

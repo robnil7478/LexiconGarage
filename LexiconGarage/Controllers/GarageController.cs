@@ -47,7 +47,7 @@ namespace LexiconGarage.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CheckIn([Bind(Include = "Id,Type,RegNo,Color,NumberOfWheels,Brand,Model,Weight",Exclude = "ParkingTime")] Vehicle vehicle)
+        public ActionResult CheckIn([Bind(Include = "Id,Type,RegNo,Owner,NumberOfWheels,Brand,Model,Weight",Exclude = "ParkingTime")] Vehicle vehicle)
         {
             if (ModelState.IsValid)
             {
@@ -81,6 +81,7 @@ namespace LexiconGarage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Exclude = "ParkingTime")] Vehicle vehicle)
         {
+          
             if (ModelState.IsValid)
             {
                 db.Entry(vehicle).State = EntityState.Modified;

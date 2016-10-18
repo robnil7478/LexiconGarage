@@ -3,7 +3,7 @@ namespace LexiconGarage.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Field_Ranges_Added : DbMigration
+    public partial class Init : DbMigration
     {
         public override void Up()
         {
@@ -14,7 +14,7 @@ namespace LexiconGarage.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         Type = c.Int(nullable: false),
                         RegNo = c.String(nullable: false, maxLength: 6),
-                        Color = c.Int(nullable: false),
+                        Owner = c.String(nullable: false),
                         ParkingTime = c.DateTime(nullable: false),
                         NumberOfWheels = c.Int(nullable: false),
                         Brand = c.String(nullable: false, maxLength: 30),
