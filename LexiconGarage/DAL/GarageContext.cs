@@ -17,6 +17,7 @@ namespace LexiconGarage.DAL
     
         public GarageContext() : base("name=GarageContext")
         {
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<GarageContext>());// XXX Ta bort när färdigt!!!
         }
 
         public System.Data.Entity.DbSet<LexiconGarage.Models.Vehicle> Vehicles { get; set; }
