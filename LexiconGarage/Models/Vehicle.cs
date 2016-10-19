@@ -23,9 +23,11 @@ namespace LexiconGarage.Models {
     }
     
     public class Vehicle {
-        private DateTime? dateCreated = null;
+        private DateTime? parkingTime = null;
 
         public const string SweReqErrorString = "Detta fält är obligatoriskt";
+
+        private string regNo;
 
         public int Id { get; set; }
 
@@ -37,20 +39,22 @@ namespace LexiconGarage.Models {
         [Display(Name = "Registreringsnummer")]
         [Required(ErrorMessage = SweReqErrorString)]
         [StringLength(6, MinimumLength = 6, ErrorMessage = "6 tecken, utan mellanslag")]
-        public string RegNo { get; set; }
-
+        public string RegNo {
+           get { return regNo; }
+            set { regNo = value.ToUpper(); }
+        }
+       
         [Display(Name = "Ägare")]
         [Required(ErrorMessage = SweReqErrorString)]
         public string Owner { get; set; }
 
         [Display(Name = "Parkeringstid")]
-        public DateTime  ParkingTime {          //DateTime2 ??
+        public DateTime  ParkingTime {
             get
             {
-                return this.dateCreated.HasValue ? this.dateCreated.Value : DateTime.Now;
+                return this.parkingTime.HasValue ? this.parkingTime.Value : DateTime.Now;
             }
-
-            set { this.dateCreated = value; }
+            set { this.parkingTime = value; }
         } 
 
         [Display(Name = "Antal hjul")]
