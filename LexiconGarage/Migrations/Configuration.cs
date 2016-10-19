@@ -33,7 +33,7 @@ namespace LexiconGarage.Migrations {
                       NumberOfWheels = 4,
                       Brand = "Volvo",
                       Model = "V40",
-                      Weight = 2100
+                      Weight = 3000
                   }
                   , new Vehicle {
                       Type = VehicleType.Car,
