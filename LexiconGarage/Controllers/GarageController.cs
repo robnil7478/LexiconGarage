@@ -123,7 +123,7 @@ namespace LexiconGarage.Controllers
             var anEmptyList = new List<Vehicle>();
             var tuple = new Tuple<IEnumerable<Vehicle>, Vehicle>(anEmptyList, new Vehicle());
             //return PartialView("Search", tuple);
-
+            ViewBag.SearchTableInfo = string.Empty;
             return View("Search", tuple);
         }
 
@@ -164,6 +164,7 @@ namespace LexiconGarage.Controllers
                                         select x).ToList();
 
             var tuple = new Tuple<IEnumerable<Vehicle>, Vehicle>(subsetListOfVehicles, vehicle);
+            ViewBag.SearchTableInfo = "Antal matchande poster: " + subsetListOfVehicles.Count.ToString();
             return View("Search", tuple);
         }
 
@@ -173,7 +174,10 @@ namespace LexiconGarage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult GetAllVehicles(string RegNo, string brand, string color)
         {
-            var tuple = new Tuple<IEnumerable<Vehicle>, Vehicle>(db.Vehicles.ToList(), new Vehicle());
+            var allVehicles = db.Vehicles.ToList();
+            ViewBag.SearchTableInfo = "Totalt antal fordon i garaget: " + allVehicles.Count.ToString();
+
+            var tuple = new Tuple<IEnumerable<Vehicle>, Vehicle>(allVehicles, new Vehicle());
             return View("Search", tuple);
         }
 
