@@ -56,7 +56,7 @@ namespace LexiconGarage.Models {
         [Display(Name = "Antal hjul")]
         [Required(ErrorMessage = SweReqErrorString)]
         [Range(0, int.MaxValue, ErrorMessage = "Antalet hjul måste vara >= 0")]
-        [RegularExpression("[0-9]", ErrorMessage = "Heltal > 0")]
+        [RegularExpression("[0-9]+", ErrorMessage = "Heltal > 0")]
         public int NumberOfWheels { get; set; }
 
         [Display(Name = "Märke")]
@@ -72,7 +72,7 @@ namespace LexiconGarage.Models {
         [Display(Name = "Vikt (kg)")]
         [Required(ErrorMessage = SweReqErrorString)]
         [Range(1, int.MaxValue, ErrorMessage = "Vikten i kg, ett heltal > 0")]
-        [RegularExpression("[0-9]", ErrorMessage = "Heltal > 0")]
+        [RegularExpression("[0-9]+", ErrorMessage = "Heltal > 0")]
         public int Weight { get; set; }
     }
 
