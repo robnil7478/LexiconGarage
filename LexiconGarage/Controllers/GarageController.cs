@@ -118,16 +118,11 @@ namespace LexiconGarage.Controllers
         public ActionResult CheckOutConfirmed(int id)
         {
             Vehicle vehicle = db.Vehicles.Find(id);
-            DateTime fromTime = (DateTime) vehicle.ParkingTime;
-            DateTime toTime = DateTime.Now;
-            var minutes = (toTime - fromTime).TotalMinutes;
             Receipt receipt = new Receipt(vehicle);
             // Remove vehicle
             db.Vehicles.Remove(vehicle);
             db.SaveChanges();
 
-    ViewBag.Message = "fromTime: " + fromTime + ",  toTime:" + toTime + ",  Minutes: " + minutes;
-            //return RedirectToAction("Index");
            return View("Receipt", receipt);
         }
 
