@@ -133,29 +133,34 @@ namespace LexiconGarage.Controllers
         public ActionResult SearchVehicles([Bind(Include = "Id,Type,RegNo,Color,NumberOfWheels,Brand,Model,Weight")] Vehicle vehicle)
         //public ActionResult SearchVehicles()
         {
-            //string searchRegNo = Request.Form["Item2.RegNo"];
-            int intNumber;
+            int intVehicleType;
             bool result = false;
-
+            var subsetListOfVehicles = new List<Vehicle>();
+            string strRegNo = Request.Form["Item2.RegNo"];
+            string strOwner = Request.Form["Item2.Owner"];
+            string strBrand = Request.Form["Item2.Brand"];
+            string strType = Request.Form["Item2.Type"];
+        
             if (vehicle != null){
                 vehicle = new Vehicle();
             }
-
-            vehicle.RegNo = string.IsNullOrEmpty(Request.Form["Item2.RegNo"]) ? "" : Request.Form["Item2.RegNo"];
-            vehicle.Brand = string.IsNullOrEmpty(Request.Form["Item2.Brand"]) ? "" : Request.Form["Item2.Brand"];
-
-            string strType = string.IsNullOrEmpty(Request.Form["Item2.Type"]) ? "" : Request.Form["Item2.Type"];
-            result = Int32.TryParse(strType, out intNumber);
+            // Populerar sök-värdena till vehicle-ojektet, då behåller vi användarens inmatade värden då Search-sidan återladdas med resultatlistan/tabellen 
+            vehicle.RegNo = string.IsNullOrEmpty(strRegNo) ? "" : strRegNo;
+            vehicle.Brand = string.IsNullOrEmpty(strBrand) ? "" : strBrand;
+            vehicle.Owner = string.IsNullOrEmpty(strOwner) ? "" : strOwner;
+            // enum VehicleType med värde = 0 ('Ange fordonstyp') => söksträng 'strType' ska ges värdet tomma strängen. 
+            strType = ( string.IsNullOrEmpty(strType) || strType.Equals("0") ) ? "" : strType;
+            result = Int32.TryParse(strType, out intVehicleType);
             if (result) {
-                vehicle.Type = (VehicleType)intNumber;
+                vehicle.Type = (VehicleType)intVehicleType;
             }
 
-            var subsetListOfVehicles = new List<Vehicle>();
-            if (vehicle.RegNo.Length > 0 || vehicle.Brand.Length > 0 || vehicle.Type.ToString().Length > 0)
+            if (strRegNo.Length > 0 || strOwner.Length > 0 || strBrand.Length > 0 || strType.Length > 0)
                 subsetListOfVehicles = (from x in db.Vehicles.ToList()
-                                        where x.Type.ToString().ToUpper().Contains(vehicle.Type.ToString().ToUpper()) &&
-                                        x.Brand.ToUpper().Contains(vehicle.Brand.ToUpper()) &&
-                                        x.RegNo.ToUpper().Contains(vehicle.RegNo.ToUpper())
+                                        where ((Int32)x.Type).ToString().ToUpper().Contains(strType.ToUpper()) &&
+                                        x.Brand.ToUpper().Contains(strBrand.ToUpper()) &&
+                                        x.Owner.ToUpper().Contains(strOwner.ToUpper()) &&
+                                        x.RegNo.ToUpper().Contains(strRegNo.ToUpper())
                                         select x).ToList();
 
             var tuple = new Tuple<IEnumerable<Vehicle>, Vehicle>(subsetListOfVehicles, vehicle);
