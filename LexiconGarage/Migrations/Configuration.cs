@@ -27,7 +27,7 @@ namespace LexiconGarage.Migrations {
                   v => v.RegNo,
                   new Vehicle {
                       Type = VehicleType.Car,
-                      RegNo = "boo124",
+                      RegNo = "BOO124",
                       Owner = "Bo Ohlsson",
                       ParkingTime = new DateTime(2016, 10, 16, 10, 35, 15),
                       NumberOfWheels = 4,
@@ -37,7 +37,7 @@ namespace LexiconGarage.Migrations {
                   }
                   , new Vehicle {
                       Type = VehicleType.Car,
-                      RegNo = "ann000",
+                      RegNo = "ANN000",
                       Owner = "Anna Ohlsson",
                       ParkingTime = new DateTime(2016, 10, 1, 15, 0, 15),
                       NumberOfWheels = 4,
@@ -47,7 +47,7 @@ namespace LexiconGarage.Migrations {
                   }
                   , new Vehicle {
                       Type = VehicleType.Car,
-                      RegNo = "ann00x",
+                      RegNo = "ANN00X",
                       Owner = "Anna Ohlsson",
                       ParkingTime = new DateTime(2016, 10, 1, 15, 0, 15),
                       NumberOfWheels = 4,
@@ -57,7 +57,7 @@ namespace LexiconGarage.Migrations {
                   }
                   , new Vehicle {
                       Type = VehicleType.Bus,
-                      RegNo = "bus126",
+                      RegNo = "BUS126",
                       Owner = "SLx",
                       ParkingTime = new DateTime(2016, 10, 10, 15, 0, 15),
                       NumberOfWheels = 8,
@@ -67,7 +67,7 @@ namespace LexiconGarage.Migrations {
                   }
                   , new Vehicle {
                       Type = VehicleType.MotorCycle,
-                      RegNo = "mc1234",
+                      RegNo = "MC1234",
                       Owner = "Anna Karlsson",
                       ParkingTime = new DateTime(2016, 9, 30, 10, 35, 15),
                       NumberOfWheels = 2,
@@ -77,7 +77,7 @@ namespace LexiconGarage.Migrations {
                   }
                   , new Vehicle {
                       Type = VehicleType.MotorCycle,
-                      RegNo = "mc1235",
+                      RegNo = "MC1235",
                       Owner = "Sanna Carlsson",
                       ParkingTime = new DateTime(2016, 9, 30, 12, 35, 15),
                       NumberOfWheels = 2,
@@ -87,7 +87,7 @@ namespace LexiconGarage.Migrations {
                   }
                   , new Vehicle {
                       Type = VehicleType.AeroPlane,
-                      RegNo = "airNex",
+                      RegNo = "AIRNEX",
                       Owner = "SAS",
                       ParkingTime = new DateTime(2016, 10, 16, 22, 0, 0),
                       NumberOfWheels = 9,
@@ -127,7 +127,7 @@ namespace LexiconGarage.Migrations {
                  }
                  , new Vehicle {
                      Type = VehicleType.Bus,
-                     RegNo = "Buss02",
+                     RegNo = "BUSS02",
                      Owner = "SweBus",
                      ParkingTime = new DateTime(2016, 9, 16, 11, 12, 32),
                      NumberOfWheels = 14,
