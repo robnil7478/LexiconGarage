@@ -51,9 +51,15 @@ namespace LexiconGarage.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Vehicles.Add(vehicle);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var list = db.Vehicles.Where(v => v.RegNo == vehicle.RegNo).ToList();
+                if (list.Count == 0) {
+                    db.Vehicles.Add(vehicle);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else {
+                    ViewBag.ErrorMessage = "Felmeddelande: Det finns redan ett fordon med registreringsnummer " + vehicle.RegNo + " registrerat.";
+                }
             }
 
             return View(vehicle);
