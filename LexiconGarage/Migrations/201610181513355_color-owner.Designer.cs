@@ -7,13 +7,13 @@ namespace LexiconGarage.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class Ettnamn : IMigrationMetadata
+    public sealed partial class colorowner : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Ettnamn));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(colorowner));
         
         string IMigrationMetadata.Id
         {
-            get { return "201610171508261_Ettnamn"; }
+            get { return "201610181513355_color-owner"; }
         }
         
         string IMigrationMetadata.Source
