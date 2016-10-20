@@ -40,7 +40,8 @@ namespace LexiconGarage.Models {
             int days = totalTime.Days;
             int hours = totalTime.Hours;
             int minutes = totalTime.Minutes;
-            return days + " dagar, " + hours + " timmar, " + minutes + " minuter";
+            return days + " dagar, " + hours + " timmar, " + 
+                   minutes + " minuter";
         }
     }
 }
