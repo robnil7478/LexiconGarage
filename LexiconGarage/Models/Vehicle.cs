@@ -48,7 +48,7 @@ namespace LexiconGarage.Models {
         [Required(ErrorMessage = SweReqErrorString)]
         public string Owner { get; set; }
 
-        [Display(Name = "Parkeringstid")]
+        [Display(Name = "Parkerades")]
         public DateTime  ParkingTime {
             get
             {

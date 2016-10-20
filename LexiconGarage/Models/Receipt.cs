@@ -19,7 +19,7 @@ namespace LexiconGarage.Models {
         public DateTime ToTime { get; set; }
         [Display(Name = "Total parkeringstid")]
         public string TotalTime { get; set; }
-        [Display(Name = "Pris per påbörjad halvtimme")]
+        [Display(Name = "Taxa")]
         public int Rate { get; set; }
         [Display(Name = "Pris")]
         public int Price { get; set; }
@@ -32,8 +32,8 @@ namespace LexiconGarage.Models {
             ToTime = DateTime.Now;
             TimeSpan totalTime = (ToTime - FromTime);
             TotalTime = FormatTime(totalTime);
-            Rate = 30; // 30 kr per hel halvtimme
-            Price = Rate * (int)(totalTime.TotalMinutes/30);
+            Rate = 1; // 60 kr/ hour
+            Price = Rate * (int) totalTime.TotalMinutes;
         }
 
         public string FormatTime(TimeSpan totalTime) {

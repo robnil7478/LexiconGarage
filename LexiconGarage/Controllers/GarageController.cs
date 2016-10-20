@@ -9,36 +9,29 @@ using System.Web.Mvc;
 using LexiconGarage.DAL;
 using LexiconGarage.Models;
 
-namespace LexiconGarage.Controllers
-{
-    public class GarageController : Controller
-    {
+namespace LexiconGarage.Controllers {
+    public class GarageController : Controller {
         private GarageContext db = new GarageContext();
 
         // GET: Garage
-        public ActionResult Index()
-        {
+        public ActionResult Index() {
             return View(db.Vehicles.ToList());
         }
 
         // GET: Garage/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
+        public ActionResult Details(int? id) {
+            if (id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Vehicle vehicle = db.Vehicles.Find(id);
-            if (vehicle == null)
-            {
+            if (vehicle == null) {
                 return HttpNotFound();
             }
             return View(vehicle);
         }
 
         // GET: Garage/CheckIn
-        public ActionResult CheckIn()
-        {
+        public ActionResult CheckIn() {
             return View();
         }
 
@@ -47,17 +40,14 @@ namespace LexiconGarage.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CheckIn([Bind(Include = "Id,Type,RegNo,Owner,NumberOfWheels,Brand,Model,Weight",Exclude = "ParkingTime")] Vehicle vehicle)
-        {
-            if (ModelState.IsValid)
-            {
+        public ActionResult CheckIn([Bind(Include = "Id,Type,RegNo,Owner,NumberOfWheels,Brand,Model,Weight", Exclude = "ParkingTime")] Vehicle vehicle) {
+            if (ModelState.IsValid) {
                 var list = db.Vehicles.Where(v => v.RegNo == vehicle.RegNo).ToList();
                 if (list.Count == 0) {
                     db.Vehicles.Add(vehicle);
                     db.SaveChanges();
                     return RedirectToAction("Index");
-                }
-                else {
+                } else {
                     ViewBag.ErrorMessage = "Felmeddelande: Det finns redan ett fordon med registreringsnummer " + vehicle.RegNo + " registrerat.";
                 }
             }
@@ -66,15 +56,12 @@ namespace LexiconGarage.Controllers
         }
 
         // GET: Garage/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
+        public ActionResult Edit(int? id) {
+            if (id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Vehicle vehicle = db.Vehicles.Find(id);
-            if (vehicle == null)
-            {
+            if (vehicle == null) {
                 return HttpNotFound();
             }
             return View(vehicle);
@@ -85,11 +72,8 @@ namespace LexiconGarage.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Exclude = "ParkingTime")] Vehicle vehicle)
-        {
-          
-            if (ModelState.IsValid)
-            {
+        public ActionResult Edit([Bind(Exclude = "ParkingTime")] Vehicle vehicle) {
+            if (ModelState.IsValid) {
                 db.Entry(vehicle).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -98,15 +82,12 @@ namespace LexiconGarage.Controllers
         }
 
         // GET: Garage/CheckOut/5
-        public ActionResult CheckOut(int? id)
-        {
-            if (id == null)
-            {
+        public ActionResult CheckOut(int? id) {
+            if (id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Vehicle vehicle = db.Vehicles.Find(id);
-            if (vehicle == null)
-            {
+            if (vehicle == null) {
                 return HttpNotFound();
             }
             return View(vehicle);
@@ -115,23 +96,22 @@ namespace LexiconGarage.Controllers
         // POST: Garage/Checkout/5
         [HttpPost, ActionName("CheckOut")]
         [ValidateAntiForgeryToken]
-        public ActionResult CheckOutConfirmed(int id)
-        {
+        public ActionResult CheckOutConfirmed(int id) {
             Vehicle vehicle = db.Vehicles.Find(id);
+            if (vehicle == null) {
+                return HttpNotFound();
+            }
             Receipt receipt = new Receipt(vehicle);
             // Remove vehicle
             db.Vehicles.Remove(vehicle);
             db.SaveChanges();
-
-           return View("Receipt", receipt);
+            return View("Receipt", receipt);
         }
 
 
-        public ActionResult Search(string regNo, string brand, string color)
-        {
+        public ActionResult Search(string regNo, string brand, string color) {
             var anEmptyList = new List<Vehicle>();
             var tuple = new Tuple<IEnumerable<Vehicle>, Vehicle>(anEmptyList, new Vehicle());
-            //return PartialView("Search", tuple);
             ViewBag.SearchTableInfo = string.Empty;
             return View("Search", tuple);
         }
@@ -149,8 +129,8 @@ namespace LexiconGarage.Controllers
             string strOwner = Request.Form["Item2.Owner"];
             string strBrand = Request.Form["Item2.Brand"];
             string strType = Request.Form["Item2.Type"];
-        
-            if (vehicle != null){
+
+            if (vehicle != null) {
                 vehicle = new Vehicle();
             }
             // Populerar sök-värdena till vehicle-ojektet, då behåller vi användarens inmatade värden då Search-sidan återladdas med resultatlistan/tabellen 
@@ -158,7 +138,7 @@ namespace LexiconGarage.Controllers
             vehicle.Brand = string.IsNullOrEmpty(strBrand) ? "" : strBrand;
             vehicle.Owner = string.IsNullOrEmpty(strOwner) ? "" : strOwner;
             // enum VehicleType med värde = 0 ('Ange fordonstyp') => söksträng 'strType' ska ges värdet tomma strängen. 
-            strType = ( string.IsNullOrEmpty(strType) || strType.Equals("0") ) ? "" : strType;
+            strType = (string.IsNullOrEmpty(strType) || strType.Equals("0")) ? "" : strType;
             result = Int32.TryParse(strType, out intVehicleType);
             if (result) {
                 vehicle.Type = (VehicleType)intVehicleType;
@@ -181,8 +161,7 @@ namespace LexiconGarage.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult GetAllVehicles(string RegNo, string brand, string color)
-        {
+        public ActionResult GetAllVehicles(string RegNo, string brand, string color) {
             var allVehicles = db.Vehicles.ToList();
             ViewBag.SearchTableInfo = "Totalt antal fordon i garaget: " + allVehicles.Count.ToString();
 
@@ -193,21 +172,18 @@ namespace LexiconGarage.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ResetSearch(string RegNo, string brand, string color)
-        {
+        public ActionResult ResetSearch(string RegNo, string brand, string color) {
             var anEmptyList = new List<Vehicle>();
 
             var tuple = new Tuple<IEnumerable<Vehicle>, Vehicle>(anEmptyList, new Vehicle());
             return View("Search", tuple);
         }
 
-        
 
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
+
+        protected override void Dispose(bool disposing) {
+            if (disposing) {
                 db.Dispose();
             }
             base.Dispose(disposing);
