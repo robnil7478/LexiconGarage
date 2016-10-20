@@ -78,6 +78,12 @@ namespace LexiconGarage.Models {
         [Range(1, int.MaxValue, ErrorMessage = "Vikten i kg, ett heltal > 0")]
         [RegularExpression("[0-9]+", ErrorMessage = "Heltal > 0")]
         public int Weight { get; set; }
+
+        [Display(Name = "Platsnummer")]
+        [Range(1, int.MaxValue, ErrorMessage = "ett heltal > 0")]
+        
+        public int ParkingSlot { get; set; }
+
     }
 
 

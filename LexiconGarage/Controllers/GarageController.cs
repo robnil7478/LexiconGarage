@@ -13,9 +13,15 @@ namespace LexiconGarage.Controllers {
     public class GarageController : Controller {
         private GarageContext db = new GarageContext();
 
+
         // GET: Garage
         public ActionResult Index() {
-            return View(db.Vehicles.ToList());
+            return View();
+        }
+
+        public ActionResult About()
+        {
+            return View();
         }
 
         // GET: Garage/Details/5
@@ -124,6 +130,7 @@ namespace LexiconGarage.Controllers {
         {
             int intVehicleType;
             bool result = false;
+
             var subsetListOfVehicles = new List<Vehicle>();
             string strRegNo = Request.Form["Item2.RegNo"];
             string strOwner = Request.Form["Item2.Owner"];
@@ -180,7 +187,12 @@ namespace LexiconGarage.Controllers {
         }
 
 
-
+        // GET: List all vehicle in Garage
+        public ActionResult AllVehicle()
+        {
+            return View(db.Vehicles.ToList());
+        }
+        
 
         protected override void Dispose(bool disposing) {
             if (disposing) {
