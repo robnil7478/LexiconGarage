@@ -11,6 +11,13 @@ using LexiconGarage.Models;
 
 namespace LexiconGarage.Controllers {
     public class GarageController : Controller {
+        public GarageController() {
+            if (db.Garage.Find(1) == null) {
+                var garage = new Garage();
+                db.Garage.Add(garage);
+                db.SaveChanges();
+            }
+        }
         private GarageContext db = new GarageContext();
 
 
@@ -50,6 +57,9 @@ namespace LexiconGarage.Controllers {
         public ActionResult CheckIn([Bind(Include = "Id,Type,RegNo,Owner,NumberOfWheels,Brand,Model,Weight", Exclude = "ParkingTime")] Vehicle vehicle) {
             if (ModelState.IsValid) {
                 if (! RegNoAlreadyCheckedIn(vehicle.RegNo)) {
+                //    Garage garage = db.Garage.Find(1);
+                    //garage.Statistics.TotalWheels += vehicle.NumberOfWheels;
+                //    garage.AddVehicleInStat(vehicle);
                     db.Vehicles.Add(vehicle);
                     db.SaveChanges();
                     return RedirectToAction("AllVehicle");
@@ -118,7 +128,9 @@ namespace LexiconGarage.Controllers {
             if (vehicle == null) {
                 return HttpNotFound();
             }
-            Receipt receipt = new Receipt(vehicle);
+            Garage garage = db.Garage.Find(1);
+            Receipt receipt = new Receipt(vehicle, garage.Rate);
+    //        garage.RemoveVehicleInStat(vehicle);
             // Remove vehicle
             db.Vehicles.Remove(vehicle);
             db.SaveChanges();
@@ -142,7 +154,6 @@ namespace LexiconGarage.Controllers {
         {
             int intVehicleType;
             bool result = false;
-
             var subsetListOfVehicles = new List<Vehicle>();
             string strRegNo = Request.Form["Item2.RegNo"];
             string strOwner = Request.Form["Item2.Owner"];
@@ -177,7 +188,6 @@ namespace LexiconGarage.Controllers {
             ViewBag.SearchTableInfo = "Antal matchande poster: " + subsetListOfVehicles.Count.ToString();
             return View("Search", tuple);
         }
-
 
 
         [HttpPost]
