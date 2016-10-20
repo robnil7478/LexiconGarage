@@ -9,74 +9,43 @@
 <div>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.RegNo)
-        </dt>
+        <dt>@Html.DisplayNameFor(model => model.RegNo)</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.RegNo)
-        </dd>
+        <dd>@Html.DisplayFor(model => model.RegNo)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.VehicleType)
-        </dt>
+        <dt>@Html.DisplayNameFor(model => model.VehicleType)</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.VehicleType)
-        </dd>
+        <dd>@Html.DisplayFor(model => model.VehicleType)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Owner)
-        </dt>
+        <dt>@Html.DisplayNameFor(model => model.Owner)</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Owner)
-        </dd>
+        <dd>@Html.DisplayFor(model => model.Owner)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.FromTime)
-        </dt>
+        <dt>@Html.DisplayNameFor(model => model.FromTime)</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.FromTime)
-        </dd>
+        <dd>@Html.DisplayFor(model => model.FromTime)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ToTime)
-        </dt>
+        <dt>@Html.DisplayNameFor(model => model.ToTime)</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ToTime)
-        </dd>
+        <dd>@Html.DisplayFor(model => model.ToTime)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TotalTime)
-        </dt>
+        <dt>@Html.DisplayNameFor(model => model.TotalTime)</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.TotalTime)
-        </dd>
+        <dd>@Html.DisplayFor(model => model.TotalTime)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Rate)
-        </dt>
+        <dt>@Html.DisplayNameFor(model => model.Rate)</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Rate) kr/ minut
-        </dd>
+        <dd>@Html.DisplayFor(model => model.Rate) kr/ minut</dd>
 
         <br>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
+        <dt>@Html.DisplayNameFor(model => model.Price)</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Price) kr
-        </dd>
+        <dd>@Html.DisplayFor(model => model.Price) kr </dd>
     </dl>
 </div>
 <p>
-    @*@Html.ActionLink("Skriv ut", "PrintReceipt") |*@ <!--XXX Skriva ut-->
+    <input type="submit" value="Skriv ut" onclick="window.print(); return false;" class="btn btn-default" />
+    <br /><br /><br />
     @Html.ActionLink("Tillbaka till fordonslistan", "Index")
 </p>

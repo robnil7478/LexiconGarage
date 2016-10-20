@@ -42,8 +42,9 @@ namespace LexiconGarage.Controllers {
         }
 
         // POST: Garage/CheckIn
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // To protect from overposting attacks, please enable the specific properties 
+        // you want to bind to, for more details see
+        // http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CheckIn([Bind(Include = "Id,Type,RegNo,Owner,NumberOfWheels,Brand,Model,Weight", Exclude = "ParkingTime")] Vehicle vehicle) {
@@ -54,7 +55,8 @@ namespace LexiconGarage.Controllers {
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 } else {
-                    ViewBag.ErrorMessage = "Felmeddelande: Det finns redan ett fordon med registreringsnummer " + vehicle.RegNo + " registrerat.";
+                    ViewBag.ErrorMessage = "Felmeddelande: Det finns redan ett fordon " + 
+                        "med registreringsnummer " + vehicle.RegNo + " registrerat.";
                 }
             }
 
@@ -74,8 +76,9 @@ namespace LexiconGarage.Controllers {
         }
 
         // POST: Garage/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // To protect from overposting attacks, please enable the specific properties
+        // you want to bind to, for more details see 
+        // http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Exclude = "ParkingTime")] Vehicle vehicle) {
@@ -114,10 +117,10 @@ namespace LexiconGarage.Controllers {
             return View("Receipt", receipt);
         }
 
-
         public ActionResult Search(string regNo, string brand, string color) {
             var anEmptyList = new List<Vehicle>();
-            var tuple = new Tuple<IEnumerable<Vehicle>, Vehicle>(anEmptyList, new Vehicle());
+            var tuple = new Tuple<IEnumerable<Vehicle>, Vehicle>(anEmptyList, 
+                new Vehicle());
             ViewBag.SearchTableInfo = string.Empty;
             return View("Search", tuple);
         }
@@ -125,7 +128,8 @@ namespace LexiconGarage.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SearchVehicles([Bind(Include = "Id,Type,RegNo,Color,NumberOfWheels,Brand,Model,Weight")] Vehicle vehicle)
+        public ActionResult SearchVehicles([Bind(Include = 
+            "Id,Type,RegNo,Color,NumberOfWheels,Brand,Model,Weight")] Vehicle vehicle)
         //public ActionResult SearchVehicles()
         {
             int intVehicleType;
@@ -140,11 +144,13 @@ namespace LexiconGarage.Controllers {
             if (vehicle != null) {
                 vehicle = new Vehicle();
             }
-            // Populerar sök-värdena till vehicle-ojektet, då behåller vi användarens inmatade värden då Search-sidan återladdas med resultatlistan/tabellen 
+            // Populerar sök-värdena till vehicle-ojektet, då behåller vi användarens 
+            // inmatade värden då Search-sidan återladdas med resultatlistan/tabellen 
             vehicle.RegNo = string.IsNullOrEmpty(strRegNo) ? "" : strRegNo;
             vehicle.Brand = string.IsNullOrEmpty(strBrand) ? "" : strBrand;
             vehicle.Owner = string.IsNullOrEmpty(strOwner) ? "" : strOwner;
-            // enum VehicleType med värde = 0 ('Ange fordonstyp') => söksträng 'strType' ska ges värdet tomma strängen. 
+            // enum VehicleType med värde = 0 ('Ange fordonstyp') => söksträng 'strType' 
+            // ska ges värdet tomma strängen. 
             strType = (string.IsNullOrEmpty(strType) || strType.Equals("0")) ? "" : strType;
             result = Int32.TryParse(strType, out intVehicleType);
             if (result) {
