@@ -6,6 +6,8 @@
 
 <h3>Hämta / Checka ut</h3>
 
+<h2>@ViewBag.Message</h2>
+
 <h3>Följande fordon kommer att tas bort från garaget:</h3>
 <div>
     <hr />
@@ -19,9 +21,6 @@
         <dt>@Html.DisplayNameFor(model => model.Owner)</dt>
         <dd>@Html.DisplayFor(model => model.Owner)</dd>
 
-        <dt>@Html.DisplayNameFor(model => model.ParkingTime)</dt>
-        <dd>@Html.DisplayFor(model => model.ParkingTime)</dd>
-
         <dt>@Html.DisplayNameFor(model => model.NumberOfWheels)</dt>
         <dd>@Html.DisplayFor(model => model.NumberOfWheels)</dd>
 
@@ -33,7 +32,10 @@
 
         <dt>@Html.DisplayNameFor(model => model.Weight)</dt>
         <dd>@Html.DisplayFor(model => model.Weight)</dd>
+        <br />
 
+        <dt>@Html.DisplayNameFor(model => model.ParkingTime)</dt>
+        <dd>@Html.DisplayFor(model => model.ParkingTime)</dd>
     </dl>
 
     @using (Html.BeginForm()) {

@@ -36,7 +36,7 @@ namespace LexiconGarage.Models {
         [Range(1, int.MaxValue, ErrorMessage = "Du måste välja fordonstyp")]
         public VehicleType Type { get; set; }
 
-        [Display(Name = "Registreringsnummer")]
+        [Display(Name = "Reg.nr")]
         [Required(ErrorMessage = SweReqErrorString)]
         [StringLength(6, MinimumLength = 6, ErrorMessage = "6 tecken, utan mellanslag")]
         public string RegNo {
@@ -48,7 +48,7 @@ namespace LexiconGarage.Models {
         [Required(ErrorMessage = SweReqErrorString)]
         public string Owner { get; set; }
 
-        [Display(Name = "Parkeringstid")]
+        [Display(Name = "Parkerades")]
         public DateTime  ParkingTime {
             get
             {
