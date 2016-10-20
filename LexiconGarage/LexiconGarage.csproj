@@ -212,6 +212,12 @@
     <Compile Include="Models\Vehicle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Content Include="Content\bootstrap-sortable.css" />
+    <Content Include="Scripts\bootstrap-sortable.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Views\Garage\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>

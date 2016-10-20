@@ -29,6 +29,23 @@ textarea {
     max-width: 280px;
 }
 
+
+tr{
+    /* height: 20px; */
+
+}
+
+p.table-info {
+    font-weight: 900;
+}
+
+
+td.table-info{
+    font-weight: 900;
+    height:50px;
+     
+        
+}
 .error-message {
     color: #b94a48;
 }
