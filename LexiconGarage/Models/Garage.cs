@@ -11,8 +11,7 @@ namespace LexiconGarage.Models {
         public int Rate { get; set; }
         public GarageStatistics Statistics { get; set; }
 
-        public Garage() {
-            new Garage(10, 1);
+        public Garage() : this(10,1) {
         }
         public Garage(int amountOfSlots = 10, int rate = 1) { // XXX Utöka antal platser!
             AmountOfSlots = amountOfSlots;
