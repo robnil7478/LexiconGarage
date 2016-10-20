@@ -24,16 +24,15 @@ namespace LexiconGarage.Models {
         [Display(Name = "Pris")]
         public int Price { get; set; }
 
-        public Receipt(Vehicle vehicle) {
+        public Receipt(Vehicle vehicle, int rate) {
             RegNo = vehicle.RegNo;
             VehicleType = vehicle.Type;
             Owner = vehicle.Owner;
             FromTime = vehicle.ParkingTime;
             ToTime = DateTime.Now;
-            TimeSpan totalTime = (ToTime - FromTime);
-            TotalTime = FormatTime(totalTime);
-            Rate = 1; // 60 kr/ hour
-            Price = Rate * (int) totalTime.TotalMinutes;
+            TotalTime = FormatTime(ToTime - FromTime);
+            Rate = rate; 
+            Price = TotalCost(FromTime, ToTime, rate);
         }
 
         public string FormatTime(TimeSpan totalTime) {
@@ -43,5 +42,9 @@ namespace LexiconGarage.Models {
             return days + " dagar, " + hours + " timmar, " + 
                    minutes + " minuter";
         }
+        static public int TotalCost(DateTime fromTime, DateTime toTime, int rate) {
+            TimeSpan totalTime = (toTime - fromTime);
+            return rate * (int) totalTime.TotalMinutes;
+        } 
     }
 }
