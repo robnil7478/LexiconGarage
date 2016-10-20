@@ -10,16 +10,16 @@ namespace LexiconGarage.Models {
     public enum VehicleType {
         [Display(Name = "Välj fordonstyp:")]
         None,
-        [Display(Name = "Motorcykel")]
-        MotorCycle,
         [Display(Name = "Bil")]
         Car,
         [Display(Name = "Buss")]
         Bus,
+        [Display(Name = "Båt")]
+        Boat,
         [Display(Name = "Flygplan")]
         AeroPlane,
-        [Display(Name = "Båt")]
-        Boat
+        [Display(Name = "Motorcykel")]
+        MotorCycle
     }
     
     public class Vehicle {
