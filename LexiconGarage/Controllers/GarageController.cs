@@ -11,15 +11,16 @@ using LexiconGarage.Models;
 
 namespace LexiconGarage.Controllers {
     public class GarageController : Controller {
-        public GarageController() {
-            if (db.Garage.Find(1) == null) {
-                var garage = new Garage();
-                db.Garage.Add(garage);
-                db.SaveChanges();
-            }
-        }
+
+        private Garage garage = new Garage();
         private GarageContext db = new GarageContext();
 
+        public GarageController() {
+            var count = db.Vehicles.Count();
+            if (count != 0 && garage.AmountOfSlots == garage.EmptySlots) {
+                garage.EmptySlots -= count;
+            }
+        }
         // GET: Garage
         public ActionResult Index() {
             return View(db.Vehicles.ToList());
@@ -52,14 +53,13 @@ namespace LexiconGarage.Controllers {
             if (ModelState.IsValid) {
                 var list = db.Vehicles.Where(v => v.RegNo == vehicle.RegNo).ToList();
                 if (list.Count == 0) {
-                //    Garage garage = db.Garage.Find(1);
-                    //garage.Statistics.TotalWheels += vehicle.NumberOfWheels;
-                //    garage.AddVehicleInStat(vehicle);
+                    garage.Statistics.TotalWheels += vehicle.NumberOfWheels;
+                    garage.AddVehicleInStat(vehicle);
                     db.Vehicles.Add(vehicle);
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 } else {
-                    ViewBag.ErrorMessage = "Felmeddelande: Det finns redan ett fordon " + 
+                    ViewBag.ErrorMessage = "Felmeddelande: Det finns redan ett fordon " +
                         "med registreringsnummer " + vehicle.RegNo + " registrerat.";
                 }
             }
@@ -114,9 +114,9 @@ namespace LexiconGarage.Controllers {
             if (vehicle == null) {
                 return HttpNotFound();
             }
-            Garage garage = db.Garage.Find(1);
+
             Receipt receipt = new Receipt(vehicle, garage.Rate);
-    //        garage.RemoveVehicleInStat(vehicle);
+            garage.RemoveVehicleInStat(vehicle);
             // Remove vehicle
             db.Vehicles.Remove(vehicle);
             db.SaveChanges();
@@ -125,7 +125,7 @@ namespace LexiconGarage.Controllers {
 
         public ActionResult Search(string regNo, string brand, string color) {
             var anEmptyList = new List<Vehicle>();
-            var tuple = new Tuple<IEnumerable<Vehicle>, Vehicle>(anEmptyList, 
+            var tuple = new Tuple<IEnumerable<Vehicle>, Vehicle>(anEmptyList,
                 new Vehicle());
             ViewBag.SearchTableInfo = string.Empty;
             return View("Search", tuple);
@@ -134,7 +134,7 @@ namespace LexiconGarage.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SearchVehicles([Bind(Include = 
+        public ActionResult SearchVehicles([Bind(Include =
             "Id,Type,RegNo,Color,NumberOfWheels,Brand,Model,Weight")] Vehicle vehicle)
         //public ActionResult SearchVehicles()
         {
