@@ -49,8 +49,7 @@ namespace LexiconGarage.Controllers {
         [ValidateAntiForgeryToken]
         public ActionResult CheckIn([Bind(Include = "Id,Type,RegNo,Owner,NumberOfWheels,Brand,Model,Weight", Exclude = "ParkingTime")] Vehicle vehicle) {
             if (ModelState.IsValid) {
-                var list = db.Vehicles.Where(v => v.RegNo == vehicle.RegNo).ToList();
-                if (list.Count == 0) {
+                if (! RegNoAlreadyCheckedIn(vehicle.RegNo)) {
                     db.Vehicles.Add(vehicle);
                     db.SaveChanges();
                     return RedirectToAction("AllVehicle");
@@ -84,10 +83,19 @@ namespace LexiconGarage.Controllers {
         public ActionResult Edit([Bind(Exclude = "ParkingTime")] Vehicle vehicle) {
             // För Debug: var errors = ModelState.Values.SelectMany(v => v.Errors); 
             if (ModelState.IsValid) {
-                db.Entry(vehicle).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var oldRegNo = db.Vehicles.Where(v => v.Id == vehicle.Id).Select(v => v.RegNo).FirstOrDefault();
+                var oldParkTime = db.Vehicles.Where(v => v.Id == vehicle.Id).Select(v => v.ParkingTime).FirstOrDefault();
+                if (oldRegNo == vehicle.RegNo || ! RegNoAlreadyCheckedIn(vehicle.RegNo)) {
+                    vehicle.ParkingTime = oldParkTime;
+                    db.Entry(vehicle).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("AllVehicle");
+                }
+                ViewBag.ErrorMessage = "Felmeddelande: Det finns redan ett fordon " +
+                        "med registreringsnummer " + vehicle.RegNo + " registrerat.";
+                return View(vehicle);
             }
+            ViewBag.ErrorMessage = "Felmeddelande: Felaktig inmatning.";
             return View(vehicle);
         }
 
@@ -206,6 +214,11 @@ namespace LexiconGarage.Controllers {
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private bool RegNoAlreadyCheckedIn(string regNo) {
+            var count = db.Vehicles.Where(v => v.RegNo == regNo).ToList().Count;
+            return count != 0;
         }
     }
 }

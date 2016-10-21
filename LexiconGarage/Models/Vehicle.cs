@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -36,6 +37,7 @@ namespace LexiconGarage.Models {
         [Range(1, int.MaxValue, ErrorMessage = "Du måste välja fordonstyp")]
         public VehicleType Type { get; set; }
 
+        [Index(IsUnique = true)]
         [Display(Name = "Reg.nr")]
         [Required(ErrorMessage = SweReqErrorString)]
         [StringLength(6, MinimumLength = 6, ErrorMessage = "6 tecken, utan mellanslag")]
@@ -50,12 +52,19 @@ namespace LexiconGarage.Models {
 
         [Display(Name = "Parkerades")]
         public DateTime  ParkingTime {
-            get
-            {
-                return this.parkingTime.HasValue ? this.parkingTime.Value : DateTime.Now;
+            //get
+            //{
+            //    return this.parkingTime.HasValue ? this.parkingTime.Value : DateTime.Now;
+            //}
+            //set { this.parkingTime = value; }
+            get {
+                if (parkingTime.HasValue)
+                    return parkingTime.Value;
+                parkingTime = DateTime.Now;
+                return parkingTime.Value;
             }
-            set { this.parkingTime = value; }
-        } 
+            set { parkingTime = value; }
+        }
 
         [Display(Name = "Antal hjul")]
         [Required(ErrorMessage = SweReqErrorString)]
