@@ -82,6 +82,7 @@ namespace LexiconGarage.Controllers {
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Exclude = "ParkingTime")] Vehicle vehicle) {
+            // För Debug: var errors = ModelState.Values.SelectMany(v => v.Errors); 
             if (ModelState.IsValid) {
                 db.Entry(vehicle).State = EntityState.Modified;
                 db.SaveChanges();

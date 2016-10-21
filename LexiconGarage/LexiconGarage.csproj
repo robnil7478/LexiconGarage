@@ -216,6 +216,8 @@
     <Compile Include="Models\Vehicle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Content Include="App_Data\GarageContext-20161017110350.mdf" />
+    <Content Include="App_Data\GarageContext-20161017110350_log.ldf" />
     <Content Include="Content\bootstrap-sortable.css" />
     <Content Include="images\logo.png" />
     <Content Include="images\logoBlack_small.png" />
@@ -294,9 +296,6 @@
     <Content Include="Views\Garage\Receipt.cshtml" />
     <Content Include="Views\Garage\AllVehicle.cshtml" />
     <Content Include="Views\Garage\About.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
