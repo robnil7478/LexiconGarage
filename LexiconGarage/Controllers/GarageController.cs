@@ -21,7 +21,6 @@ namespace LexiconGarage.Controllers {
                 garage.EmptySlots -= count;
             }
         }
-
         // GET: Garage
         public ActionResult Index() {
             return View();
