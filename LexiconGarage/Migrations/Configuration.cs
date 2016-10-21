@@ -25,6 +25,7 @@ namespace LexiconGarage.Migrations {
             //
             context.Vehicles.AddOrUpdate(
                   v => v.RegNo,
+                  // Buss needs two, AeroPlane and Boat requires 3 parking slots
                   new Vehicle {
                       Type = VehicleType.Car,
                       RegNo = "BOO124",
@@ -33,7 +34,8 @@ namespace LexiconGarage.Migrations {
                       NumberOfWheels = 4,
                       Brand = "Volvo",
                       Model = "V40",
-                      Weight = 3000
+                      Weight = 3000,
+                      ParkingSlot = 1
                   }
                   , new Vehicle {
                       Type = VehicleType.Car,
@@ -43,7 +45,8 @@ namespace LexiconGarage.Migrations {
                       NumberOfWheels = 4,
                       Brand = "Saab",
                       Model = "XX",
-                      Weight = 2000
+                      Weight = 2000,
+                      ParkingSlot = 2
                   }
                   , new Vehicle {
                       Type = VehicleType.Car,
@@ -53,7 +56,8 @@ namespace LexiconGarage.Migrations {
                       NumberOfWheels = 4,
                       Brand = "Saab",
                       Model = "XX",
-                      Weight = 2000
+                      Weight = 2000,
+                      ParkingSlot = 3
                   }
                   , new Vehicle {
                       Type = VehicleType.Bus,
@@ -63,7 +67,8 @@ namespace LexiconGarage.Migrations {
                       NumberOfWheels = 8,
                       Brand = "Saab",
                       Model = "B55",
-                      Weight = 4500
+                      Weight = 4500,
+                      ParkingSlot = 6 // Uses slot 6 and 7
                   }
                   , new Vehicle {
                       Type = VehicleType.MotorCycle,
@@ -73,7 +78,8 @@ namespace LexiconGarage.Migrations {
                       NumberOfWheels = 2,
                       Brand = "Toyota",
                       Model = "Speedy",
-                      Weight = 200
+                      Weight = 200,
+                      ParkingSlot = 9 
                   }
                   , new Vehicle {
                       Type = VehicleType.MotorCycle,
@@ -83,7 +89,8 @@ namespace LexiconGarage.Migrations {
                       NumberOfWheels = 2,
                       Brand = "Toyota",
                       Model = "Speedy",
-                      Weight = 200
+                      Weight = 200,
+                      ParkingSlot = 10
                   }
                   , new Vehicle {
                       Type = VehicleType.AeroPlane,
@@ -93,7 +100,8 @@ namespace LexiconGarage.Migrations {
                       NumberOfWheels = 9,
                       Brand = "Boeing",
                       Model = "XX",
-                      Weight = 8000
+                      Weight = 8000,
+                      ParkingSlot = 12  // Uses slots 12, 13 and 14
                   }
                  , new Vehicle {
                      Type = VehicleType.Boat,
@@ -103,7 +111,8 @@ namespace LexiconGarage.Migrations {
                      NumberOfWheels = 12,
                      Brand = "SSSSS",
                      Model = "Steam3",
-                     Weight = 8000
+                     Weight = 8000,
+                     ParkingSlot = 16   // Uses slots 16, 17 and 18
                  }
                  , new Vehicle {
                      Type = VehicleType.Boat,
@@ -113,7 +122,8 @@ namespace LexiconGarage.Migrations {
                      NumberOfWheels = 14,
                      Brand = "Sea",
                      Model = "Steamy",
-                     Weight = 12000
+                     Weight = 12000,
+                     ParkingSlot = 19 // Uses slots 19, 20 and 21
                  }
                  , new Vehicle {
                      Type = VehicleType.AeroPlane,
@@ -123,7 +133,8 @@ namespace LexiconGarage.Migrations {
                      NumberOfWheels = 14,
                      Brand = "Fly",
                      Model = "FlyX2",
-                     Weight = 12000
+                     Weight = 12000,
+                     ParkingSlot = 23 // Uses slots 23, 24 and 25
                  }
                  , new Vehicle {
                      Type = VehicleType.Bus,
@@ -133,7 +144,8 @@ namespace LexiconGarage.Migrations {
                      NumberOfWheels = 14,
                      Brand = "SaabScania",
                      Model = "RVM23",
-                     Weight = 5000
+                     Weight = 5000,
+                     ParkingSlot = 26 // Uses slots 26 and 27
                  });
         }
     }

@@ -80,7 +80,7 @@ namespace LexiconGarage.Models {
         public int Weight { get; set; }
 
         [Display(Name = "Platsnummer")]
-        [Range(1, int.MaxValue, ErrorMessage = "ett heltal > 0")]
+        [Range(1, int.MaxValue, ErrorMessage = "Ett heltal > 0")]
         
         public int ParkingSlot { get; set; }
 
