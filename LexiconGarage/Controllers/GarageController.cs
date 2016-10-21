@@ -83,7 +83,9 @@ namespace LexiconGarage.Controllers {
         public ActionResult Edit([Bind(Exclude = "ParkingTime")] Vehicle vehicle) {
             if (ModelState.IsValid) {
                 var oldRegNo = db.Vehicles.Where(v => v.Id == vehicle.Id).Select(v => v.RegNo).FirstOrDefault();
+                var oldParkTime = db.Vehicles.Where(v => v.Id == vehicle.Id).Select(v => v.ParkingTime).FirstOrDefault();
                 if (oldRegNo == vehicle.RegNo || ! RegNoAlreadyCheckedIn(vehicle.RegNo)) {
+                    vehicle.ParkingTime = oldParkTime;
                     db.Entry(vehicle).State = EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("AllVehicle");
