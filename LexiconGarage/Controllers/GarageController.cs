@@ -53,7 +53,7 @@ namespace LexiconGarage.Controllers {
                 if (list.Count == 0) {
                     db.Vehicles.Add(vehicle);
                     db.SaveChanges();
-                    return RedirectToAction("Index");
+                    return RedirectToAction("AllVehicle");
                 } else {
                     ViewBag.ErrorMessage = "Felmeddelande: Det finns redan ett fordon " + 
                         "med registreringsnummer " + vehicle.RegNo + " registrerat.";
