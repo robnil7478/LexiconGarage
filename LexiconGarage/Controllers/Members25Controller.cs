@@ -36,18 +36,18 @@ namespace LexiconGarage.Controllers
             return View(member);
         }
 
-        // GET: Members25/Create
-        public ActionResult Create()
+        // GET: Members25/Register
+        public ActionResult Register()
         {
             return View();
         }
 
-        // POST: Members25/Create
+        // POST: Members25/Register
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,UserName,Name,TelNumber,Address")] Member member)
+        public ActionResult Register([Bind(Include = "Id,UserName,Name,TelNumber,Address")] Member member)
         {
             if (ModelState.IsValid)
             {
@@ -90,8 +90,8 @@ namespace LexiconGarage.Controllers
             return View(member);
         }
 
-        // GET: Members25/Delete/5
-        public ActionResult Delete(int? id)
+        // GET: Members25/Unregister/5
+        public ActionResult Unregister(int? id)
         {
             if (id == null)
             {
@@ -105,10 +105,10 @@ namespace LexiconGarage.Controllers
             return View(member);
         }
 
-        // POST: Members25/Delete/5
-        [HttpPost, ActionName("Delete")]
+        // POST: Members25/Unregister/5
+        [HttpPost, ActionName("Unregister")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult UnregisterConfirmed(int id)
         {
             Member member = db.Members.Find(id);
             db.Members.Remove(member);
