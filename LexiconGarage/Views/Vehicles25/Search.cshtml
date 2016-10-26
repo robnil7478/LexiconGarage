@@ -1,5 +1,5 @@
 ﻿
-@model Tuple<IEnumerable<LexiconGarage.Models.Vehicle>, LexiconGarage.Models.Vehicle, IEnumerable<SelectListItem>>
+@model Tuple<IEnumerable<LexiconGarage.Models.Vehicle>, LexiconGarage.Models.Vehicle, IEnumerable<LexiconGarage.Models.VehicleType>>
 
 @{
     ViewBag.Title = "Search";
@@ -45,7 +45,12 @@
         </div>
 
         <div class="form-group">
-           
+            @Html.LabelFor(model => model.Item2.VehicleType.TypeInSwedish, htmlAttributes: new { @class = "control-label col-md-2" })
+            @*<label for="typeInput" class="title">Fordonstyp</label>*@
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor(model => model.Item3.Id, new { @class = "dropdown-search", @id = "vehicleTypeInput", @name = "type" })
+                @*@Html.ValidationMessageFor(model => model.Item3..TypeInSwedish, "", new { @class = "text-danger" })*@
+            </div>
         </div>
 
         <div class="form-group">
