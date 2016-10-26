@@ -52,18 +52,31 @@ namespace LexiconGarage.Migrations {
                 new Member { UserName = "Olle",
                     Name = "Olle Olson",
                     TelNumber = "08-9876543",
-                    Address = "Götgatan 43" }
+                    Address = "Götgatan 43" },
+                 new Member { UserName = "SL",// 5
+                    Name = "Stockholms Lokaltrafik",
+                    TelNumber = "08-111222",
+                    Address = "Bussgatan 33" },
+                  new Member { UserName = "SAS", // 6
+                    Name = "SAS Norr",
+                    TelNumber = "0709-666 444",
+                    Address = "Norrgatan 43" },
+                  new Member { UserName = "WAX-1", // 7
+                    Name = "Waxholmsbolaget",
+                    TelNumber = "0709-777 444",
+                    Address = "Strandvägen 110" }
             };
             context.Members.AddOrUpdate(m => m.UserName, members);
 
-            /*
-        context.Vehicles.AddOrUpdate(
+            context.SaveChanges();
+
+            context.Vehicles.AddOrUpdate(
               v => v.RegNo,
               // Buss needs two, AeroPlane and Boat requires 3 parking slots
               new Vehicle {
-                  Type = VehicleType.Car,
+                  VehicleTypeId = vehicleTypes[1].Id,
                   RegNo = "BOO124",
-                  Owner = "Bo Ohlsson",
+                  MemberId = members[0].Id,
                   ParkingTime = new DateTime(2016, 10, 16, 10, 35, 15),
                   NumberOfWheels = 4,
                   Brand = "Volvo",
@@ -72,75 +85,75 @@ namespace LexiconGarage.Migrations {
                   ParkingSlot = 1
               }
               , new Vehicle {
-                  Type = VehicleType.Car,
+                  VehicleTypeId = vehicleTypes[1].Id,
                   RegNo = "ANN000",
-                  Owner = "Anna Ohlsson",
+                  MemberId = members[4].Id,
                   ParkingTime = new DateTime(2016, 10, 1, 15, 0, 15),
                   NumberOfWheels = 4,
                   Brand = "Saab",
-                  Model = "XX",
+                  Model = "V4",
                   Weight = 2000,
                   ParkingSlot = 2
               }
               , new Vehicle {
-                  Type = VehicleType.Car,
+                  VehicleTypeId = vehicleTypes[1].Id,
                   RegNo = "ANN00X",
-                  Owner = "Anna Ohlsson",
+                  MemberId = members[4].Id,
                   ParkingTime = new DateTime(2016, 10, 1, 15, 0, 15),
                   NumberOfWheels = 4,
-                  Brand = "Saab",
-                  Model = "XX",
+                  Brand = "Volvo",
+                  Model = "V70",
                   Weight = 2000,
                   ParkingSlot = 3
               }
               , new Vehicle {
-                  Type = VehicleType.Bus,
+                  VehicleTypeId = vehicleTypes[2].Id,
                   RegNo = "BUS126",
-                  Owner = "SLx",
+                  MemberId = members[5].Id,
                   ParkingTime = new DateTime(2016, 10, 10, 15, 0, 15),
                   NumberOfWheels = 8,
-                  Brand = "Saab",
+                  Brand = "Scania",
                   Model = "B55",
                   Weight = 4500,
                   ParkingSlot = 6 // Uses slot 6 and 7
               }
               , new Vehicle {
-                  Type = VehicleType.MotorCycle,
+                  VehicleTypeId = vehicleTypes[0].Id,
                   RegNo = "MC1234",
-                  Owner = "Anna Karlsson",
+                  MemberId = members[3].Id,
                   ParkingTime = new DateTime(2016, 9, 30, 10, 35, 15),
                   NumberOfWheels = 2,
-                  Brand = "Toyota",
-                  Model = "Speedy",
+                  Brand = "Yamaha",
+                  Model = "XC1000",
                   Weight = 200,
-                  ParkingSlot = 9 
+                  ParkingSlot = 9
               }
               , new Vehicle {
-                  Type = VehicleType.MotorCycle,
+                  VehicleTypeId = vehicleTypes[0].Id,
                   RegNo = "MC1235",
-                  Owner = "Sanna Carlsson",
+                  MemberId = members[2].Id,
                   ParkingTime = new DateTime(2016, 9, 30, 12, 35, 15),
                   NumberOfWheels = 2,
-                  Brand = "Toyota",
-                  Model = "Speedy",
+                  Brand = "Kawasaki",
+                  Model = "1000X",
                   Weight = 200,
                   ParkingSlot = 10
               }
               , new Vehicle {
-                  Type = VehicleType.AeroPlane,
+                  VehicleTypeId = vehicleTypes[3].Id,
                   RegNo = "AIRNEX",
-                  Owner = "SAS",
+                  MemberId = members[6].Id,
                   ParkingTime = new DateTime(2016, 10, 16, 22, 0, 0),
                   NumberOfWheels = 9,
                   Brand = "Boeing",
-                  Model = "XX",
+                  Model = "747",
                   Weight = 8000,
                   ParkingSlot = 12  // Uses slots 12, 13 and 14
               }
              , new Vehicle {
-                 Type = VehicleType.Boat,
+                 VehicleTypeId = vehicleTypes[4].Id,
                  RegNo = "SS1234",
-                 Owner = "Waxholmsbolaget",
+                 MemberId = members[7].Id,
                  ParkingTime = new DateTime(2016, 10, 16, 22, 0, 0),
                  NumberOfWheels = 12,
                  Brand = "SSSSS",
@@ -149,9 +162,9 @@ namespace LexiconGarage.Migrations {
                  ParkingSlot = 16   // Uses slots 16, 17 and 18
              }
              , new Vehicle {
-                 Type = VehicleType.Boat,
+                 VehicleTypeId = vehicleTypes[4].Id,
                  RegNo = "SS2201",
-                 Owner = "Waxholmsbolaget",
+                 MemberId = members[7].Id,
                  ParkingTime = new DateTime(2016, 9, 16, 11, 10, 30),
                  NumberOfWheels = 14,
                  Brand = "Sea",
@@ -160,9 +173,9 @@ namespace LexiconGarage.Migrations {
                  ParkingSlot = 19 // Uses slots 19, 20 and 21
              }
              , new Vehicle {
-                 Type = VehicleType.AeroPlane,
+                 VehicleTypeId = vehicleTypes[3].Id,
                  RegNo = "SAS002",
-                 Owner = "SAS",
+                 MemberId = members[6].Id,
                  ParkingTime = new DateTime(2016, 9, 16, 11, 12, 32),
                  NumberOfWheels = 14,
                  Brand = "Fly",
@@ -171,16 +184,16 @@ namespace LexiconGarage.Migrations {
                  ParkingSlot = 23 // Uses slots 23, 24 and 25
              }
              , new Vehicle {
-                 Type = VehicleType.Bus,
+                 VehicleTypeId = vehicleTypes[2].Id,
                  RegNo = "BUSS02",
-                 Owner = "SweBus",
+                 MemberId = members[5].Id,
                  ParkingTime = new DateTime(2016, 9, 16, 11, 12, 32),
                  NumberOfWheels = 14,
                  Brand = "SaabScania",
                  Model = "RVM23",
                  Weight = 5000,
                  ParkingSlot = 26 // Uses slots 26 and 27
-             });*/
+             });
         }
     }
 }
