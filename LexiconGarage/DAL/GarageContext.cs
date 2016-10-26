@@ -21,5 +21,7 @@ namespace LexiconGarage.DAL
         }
 
         public System.Data.Entity.DbSet<LexiconGarage.Models.Vehicle> Vehicles { get; set; }
+        public System.Data.Entity.DbSet<LexiconGarage.Models.Member> Members { get; set; }
+        public System.Data.Entity.DbSet<LexiconGarage.Models.VehicleType> VehicleTypes { get; set; }
     }
 }

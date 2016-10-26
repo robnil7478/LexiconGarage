@@ -8,20 +8,6 @@ using System.Web;
 
 namespace LexiconGarage.Models {
 
-    public enum VehicleType {
-        [Display(Name = "Välj fordonstyp:")]
-        None,
-        [Display(Name = "Motorcykel")]
-        MotorCycle,
-        [Display(Name = "Bil")]
-        Car,
-        [Display(Name = "Buss")]
-        Bus,
-        [Display(Name = "Flygplan")]
-        AeroPlane,
-        [Display(Name = "Båt")]
-        Boat
-    }
     
     public class Vehicle {
         private DateTime? parkingTime = null;
@@ -34,8 +20,10 @@ namespace LexiconGarage.Models {
 
         [Display(Name = "Fordonstyp")]
         [Required(ErrorMessage = SweReqErrorString)]
-        [Range(1, int.MaxValue, ErrorMessage = "Du måste välja fordonstyp")]
-        public VehicleType Type { get; set; }
+        [Range(1, int.MaxValue, ErrorMessage = "Du måste välja fordonstyp")] // XXX ??
+        public int VehicleTypeId { get; set; }
+        public virtual VehicleType VehicleType { get; set; }
+
 
         [Index(IsUnique = true)]
         [Display(Name = "Reg.nr")]
@@ -46,9 +34,11 @@ namespace LexiconGarage.Models {
             set { regNo = value.ToUpper(); }
         }
        
-        [Display(Name = "Ägare")]
-        [Required(ErrorMessage = SweReqErrorString)]
-        public string Owner { get; set; }
+        [Display(Name = "Ägare (Registrerat användarnamn)")]
+        [Required(ErrorMessage = SweReqErrorString)] // XXX
+        public int MemberId { get; set; }
+        public virtual Member Member { get; set; }
+
 
         [Display(Name = "Parkerades")]
         public DateTime  ParkingTime {

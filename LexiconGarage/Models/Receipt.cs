@@ -26,8 +26,8 @@ namespace LexiconGarage.Models {
 
         public Receipt(Vehicle vehicle) {
             RegNo = vehicle.RegNo;
-            VehicleType = vehicle.Type;
-            Owner = vehicle.Owner;
+            VehicleType = vehicle.VehicleType;
+            Owner = vehicle.Member.UserName;
             FromTime = vehicle.ParkingTime;
             ToTime = DateTime.Now;
             TimeSpan totalTime = (ToTime - FromTime);

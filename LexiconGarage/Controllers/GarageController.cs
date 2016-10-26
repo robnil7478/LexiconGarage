@@ -156,20 +156,20 @@ namespace LexiconGarage.Controllers {
             // inmatade värden då Search-sidan återladdas med resultatlistan/tabellen 
             vehicle.RegNo = string.IsNullOrEmpty(strRegNo) ? "" : strRegNo;
             vehicle.Brand = string.IsNullOrEmpty(strBrand) ? "" : strBrand;
-            vehicle.Owner = string.IsNullOrEmpty(strOwner) ? "" : strOwner;
+            vehicle.Member.UserName = string.IsNullOrEmpty(strOwner) ? "" : strOwner;
             // enum VehicleType med värde = 0 ('Ange fordonstyp') => söksträng 'strType' 
             // ska ges värdet tomma strängen. 
             strType = (string.IsNullOrEmpty(strType) || strType.Equals("0")) ? "" : strType;
             result = Int32.TryParse(strType, out intVehicleType);
-            if (result) {
-                vehicle.Type = (VehicleType)intVehicleType;
-            }
+            //if (result) {
+            //    vehicle.VehicleType = (VehicleType)intVehicleType;
+            //}
 
             if (strRegNo.Length > 0 || strOwner.Length > 0 || strBrand.Length > 0 || strType.Length > 0)
                 subsetListOfVehicles = (from x in db.Vehicles.ToList()
-                                        where ((Int32)x.Type).ToString().ToUpper().Contains(strType.ToUpper()) &&
+                                        where ((Int32)x.VehicleTypeId).ToString().ToUpper().Contains(strType.ToUpper()) &&
                                         x.Brand.ToUpper().Contains(strBrand.ToUpper()) &&
-                                        x.Owner.ToUpper().Contains(strOwner.ToUpper()) &&
+                                        x.Member.UserName.ToUpper().Contains(strOwner.ToUpper()) &&
                                         x.RegNo.ToUpper().Contains(strRegNo.ToUpper())
                                         select x).ToList();
 
