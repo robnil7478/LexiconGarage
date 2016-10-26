@@ -11,5 +11,11 @@ namespace LexiconGarage.Models {
         [Required]
         [Display(Name = "Fordonstyp")]
         public string TypeInSwedish { get; set; }
+
+        [Display(Name = "Antal parkerade fordon av denna typ")]
+        public virtual int NumberOfVehicles { get { return Vehicles.Count; } }
+
+        [Display(Name = "Fordon av denna typ")]
+        public virtual List<Vehicle> Vehicles { get; set; }
     }
 }
