@@ -1,0 +1,53 @@
+﻿@model LexiconGarage.Models.Receipt
+@{
+    ViewBag.Title = "Parkeringskvitto";
+}
+
+<h2>Parkeringskvitto</h2>
+
+<h2>@ViewBag.Message</h2>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>@Html.DisplayNameFor(model => model.RegNo)</dt>
+
+        <dd>@Html.DisplayFor(model => model.RegNo)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.VehicleType)</dt>
+
+        <dd>@Html.DisplayFor(model => model.VehicleType)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.Owner)</dt>
+
+        <dd>@Html.DisplayFor(model => model.Owner)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.FromTime)</dt>
+
+        <dd>@Html.DisplayFor(model => model.FromTime)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.ToTime)</dt>
+
+        <dd>@Html.DisplayFor(model => model.ToTime)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.TotalTime)</dt>
+
+        <dd>@Html.DisplayFor(model => model.TotalTime)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.Rate)</dt>
+
+        <dd>@Html.DisplayFor(model => model.Rate) kr/ minut</dd>
+
+        <br />
+
+        <dt>@Html.DisplayNameFor(model => model.Price)</dt>
+
+        <dd>@Html.DisplayFor(model => model.Price) kr </dd>
+    </dl>
+</div>
+<p>
+    <a onclick="window.print()" class="btn btn-default">
+        <span class="glyphicon glyphicon-print"></span> Skriv ut
+    </a>
+    <br /><br /><br />
+    @Html.ActionLink("Tillbaka till fordonslistan", "AllVehicles")
+</p>

@@ -10,7 +10,7 @@ namespace LexiconGarage.Models {
         [Display(Name = "Reg.nr")]
         public string RegNo { get; set; }
         [Display(Name = "Fordonstyp")]
-        public VehicleType VehicleType { get; set; }
+        public string VehicleType { get; set; }
         [Display(Name = "Ägare")]
         public string Owner { get; set; }
         [Display(Name = "Parkerad")]
@@ -26,7 +26,7 @@ namespace LexiconGarage.Models {
 
         public Receipt(Vehicle vehicle) {
             RegNo = vehicle.RegNo;
-            VehicleType = vehicle.VehicleType;
+            VehicleType = vehicle.VehicleType.TypeInSwedish;
             Owner = vehicle.Member.UserName;
             FromTime = vehicle.ParkingTime;
             ToTime = DateTime.Now;

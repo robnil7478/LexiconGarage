@@ -18,15 +18,17 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>               
-                <a href='@Url.Action("Index", "Garage")'>
+                <a href='@Url.Action("Index", "Vehicles25")'>
                     <img src='@Url.Content("~/images/logo_small.png")' alt="image" class="img-responsive" />
                 </a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Parkera", "CheckIn", "Garage")</li>
-                    <li>@Html.ActionLink("Hämta/Sök", "Search", "Garage")</li>
-                    <li>@Html.ActionLink("Parkerade fordon", "AllVehicle", "Garage")</li>
+                    <li>@Html.ActionLink("Parkerade fordon", "AllVehicles", "Vehicles25")</li>
+                    <li>@Html.ActionLink("Parkera", "CheckIn", "Vehicles25")</li>
+                    <li>@Html.ActionLink("Hämta/Sök", "Search", "Vehicles25")</li>
+                    <li>@Html.ActionLink("Medlemmar", "Index", "Members25")</li>
+                    <li>@Html.ActionLink("Fordonstyper", "Index", "VehicleTypes25")</li>
                     <li>@Html.ActionLink("Kontakt", "About", "Garage")</li>
                 </ul>
                 @*@Html.Partial("_LoginPartial")*@
