@@ -243,3 +243,6 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+/LexiconGarage/Migrations/201610261403485_Init.cs
+/LexiconGarage/Migrations/201610261403485_Init.Designer.cs
+/LexiconGarage/Migrations/201610261403485_Init.resx

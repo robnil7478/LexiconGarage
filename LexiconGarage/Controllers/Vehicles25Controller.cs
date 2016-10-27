@@ -160,8 +160,8 @@ namespace LexiconGarage.Controllers {
 
         public ActionResult Search(string regNo, string brand, string color) {
             var anEmptyList = new List<Vehicle>();
-            var tuple = new Tuple<IEnumerable<Vehicle>, Vehicle>(anEmptyList,
-                new Vehicle());
+            var vehicleTypes = db.VehicleTypes.ToList();
+            var tuple = new Tuple<IEnumerable<Vehicle>, Vehicle, IEnumerable<VehicleType>>(anEmptyList, new Vehicle(), vehicleTypes);
             ViewBag.SearchTableInfo = string.Empty;
             return View("Search", tuple);
         }
@@ -174,6 +174,7 @@ namespace LexiconGarage.Controllers {
         //public ActionResult SearchVehicles()
         {
             int intVehicleType;
+            var vehicleTypes = db.VehicleTypes.ToList();
             bool result = false;
 
             var subsetListOfVehicles = new List<Vehicle>();
@@ -206,7 +207,7 @@ namespace LexiconGarage.Controllers {
                                         x.RegNo.ToUpper().Contains(strRegNo.ToUpper())
                                         select x).ToList();
 
-            var tuple = new Tuple<IEnumerable<Vehicle>, Vehicle, IEnumerable<VehicleType>>(subsetListOfVehicles, vehicle,db.VehicleTypes.ToList());
+            var tuple = new Tuple<IEnumerable<Vehicle>, Vehicle, IEnumerable<VehicleType>>(subsetListOfVehicles, vehicle, vehicleTypes);
             ViewBag.SearchTableInfo = "Antal matchande poster: " + subsetListOfVehicles.Count.ToString();
             return View("Search", tuple);
         }
