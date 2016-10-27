@@ -6,6 +6,8 @@
 
 <h2>Medlemsinformation</h2>
 
+<h4 class="error-message">@ViewBag.ErrorMessage</h4>
+
 <div>
     <hr />
     <dl class="dl-horizontal">
@@ -64,4 +66,9 @@
     <br />
     @Html.ActionLink("Ändra medlemsinfo", "Edit", new { id = Model.Id })
     @*| @Html.ActionLink("Parkera fordon", "CheckInForMember", "Vehicles25", new { MemberId = Model.Id }, null)     XXXXX  *@
+    @{ if (Model.NumberOfVehicles == 0) 
+            {
+              <span> | @Html.ActionLink("Avregistrera", "Unregister", new { id = Model.Id })</span>
+            } 
+    }
 </p>

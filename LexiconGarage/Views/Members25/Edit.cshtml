@@ -6,6 +6,7 @@
 
 <h3>Ändra medlemsinformation</h3>
 
+<h4 class="error-message">@ViewBag.ErrorMessage</h4>
 
 @using (Html.BeginForm())
 {
@@ -57,7 +58,7 @@
 }
 
 <div>
-    @Html.ActionLink("Tillbaka till medlemslistan", "Index")
+    @Html.ActionLink("Medlemsinfo", "Details", new { id = Model.Id })
 </div>
 
 @section Scripts {

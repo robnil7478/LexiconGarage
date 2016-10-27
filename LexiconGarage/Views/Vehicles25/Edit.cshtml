@@ -82,14 +82,15 @@
         *@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Spara" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Tillbaka till fordonslistan", "AllVehicles")
+    @Html.ActionLink("Till fordonsinfo", "Details", new { id = Model.Id }) |
+    @Html.ActionLink("Till medlemsinfo", "Details", "Members25", new { id = Model.MemberId }, null)
 </div>
 
 @section Scripts {

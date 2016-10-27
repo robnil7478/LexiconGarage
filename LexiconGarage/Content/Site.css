@@ -45,7 +45,13 @@ td.table-info{
 }
 
 .error-message {
+    float: right;
     color: #b94a48;
+}
+
+.info-message {
+    float: right;
+    color: #27b768;
 }
 
 

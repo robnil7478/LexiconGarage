@@ -6,6 +6,9 @@
 
 <h3>Fordonstyper</h3>
 
+<h4 class="error-message">@ViewBag.ErrorMessage</h4>
+<h4 class="info-message">@ViewBag.InfoMessage</h4>
+
 <p>
     @Html.ActionLink("Lägg till ny fordonstyp", "Create")
 </p>
@@ -23,8 +26,12 @@
             <td>@Html.DisplayFor(modelItem => item.TypeInSwedish)</td>
             <td>@Html.DisplayFor(modelItem => item.NumberOfVehicles)</td>
             <td>
-                @Html.ActionLink("Ändra", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Ta bort", "Delete", new { id = item.Id })
+                @Html.ActionLink("Ändra", "Edit", new { id = item.Id }) 
+                @{ if (item.NumberOfVehicles == 0) {
+                        <span> | @Html.ActionLink("Ta bort", "Delete", new { id = item.Id })</span>
+                    }
+                }
+                
             </td>
         </tr>
     }

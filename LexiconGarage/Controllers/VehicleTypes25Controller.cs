@@ -51,11 +51,14 @@ namespace LexiconGarage.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.VehicleTypes.Add(vehicleType);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (!TypeAlreadyExists(vehicleType.TypeInSwedish)) {
+                    db.VehicleTypes.Add(vehicleType);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                } else {
+                    ViewBag.ErrorMessage = "Felmeddelande: Det finns redan en fordonstyp '" + vehicleType.TypeInSwedish + "' sparad.";
+                }
             }
-
             return View(vehicleType);
         }
 
@@ -81,11 +84,18 @@ namespace LexiconGarage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,TypeInSwedish")] VehicleType vehicleType)
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(vehicleType).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+            if (ModelState.IsValid) {
+                var oldTypeStr = db.VehicleTypes
+                    .Where(t => t.Id == vehicleType.Id)
+                    .Select(t => t.TypeInSwedish).FirstOrDefault();
+                if (oldTypeStr == vehicleType.TypeInSwedish ||
+                    !TypeAlreadyExists(vehicleType.TypeInSwedish)) {
+                    db.Entry(vehicleType).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                } else {
+                    ViewBag.ErrorMessage = "Felmeddelande: Det finns redan en fordonstyp '" + vehicleType.TypeInSwedish + "' sparad.";
+                }
             }
             return View(vehicleType);
         }
@@ -101,6 +111,12 @@ namespace LexiconGarage.Controllers
             if (vehicleType == null)
             {
                 return HttpNotFound();
+
+            } else {
+                if (vehicleType.NumberOfVehicles != 0) {
+                    ViewBag.ErrorMessage = "Felmeddelande: Fordonstypen '" + vehicleType.TypeInSwedish + "' kan inte tas bort eftersom fordon av typen finns parkerade.";
+                    return View("Index", db.VehicleTypes.ToList());
+                }
             }
             return View(vehicleType);
         }
@@ -113,7 +129,8 @@ namespace LexiconGarage.Controllers
             VehicleType vehicleType = db.VehicleTypes.Find(id);
             db.VehicleTypes.Remove(vehicleType);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            ViewBag.InfoMessage = "Fordonstypen '" + vehicleType.TypeInSwedish + "' har tagits bort.";
+            return View("Index", db.VehicleTypes.ToList());
         }
 
         protected override void Dispose(bool disposing)
@@ -123,6 +140,13 @@ namespace LexiconGarage.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private bool TypeAlreadyExists(string type) {
+            var oldType = db.VehicleTypes
+                .Where(t => t.TypeInSwedish.ToUpper() == type.ToUpper())
+                .FirstOrDefault();
+            return oldType != null;
         }
     }
 }

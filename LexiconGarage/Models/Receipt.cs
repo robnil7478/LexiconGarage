@@ -13,6 +13,7 @@ namespace LexiconGarage.Models {
         public string VehicleType { get; set; }
         [Display(Name = "Ägare")]
         public string Owner { get; set; }
+        public int MemberId { get; set; }
         [Display(Name = "Parkerad")]
         public DateTime FromTime { get; set; }
         [Display(Name = "Uthämtad")]
@@ -28,6 +29,7 @@ namespace LexiconGarage.Models {
             RegNo = vehicle.RegNo;
             VehicleType = vehicle.VehicleType.TypeInSwedish;
             Owner = vehicle.Member.UserName;
+            MemberId = vehicle.Member.Id;
             FromTime = vehicle.ParkingTime;
             ToTime = DateTime.Now;
             TimeSpan totalTime = (ToTime - FromTime);

@@ -19,7 +19,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.VehicleTypeId, "Fordonstyp", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("VehicleTypeId", null, htmlAttributes: new { @class = "form-control"})
+                @Html.DropDownList("VehicleTypeId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.VehicleTypeId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -36,12 +36,12 @@
             @Html.LabelFor(model => model.MemberId, "Användarnamn", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @*@{ if (ViewBag.MemberFixed) {
-                        @Html.DisplayFor(model => model.Member.UserName)
-                        @ViewBag.UserName
-                    } else {
-                        @Html.DropDownList("MemberId", null, htmlAttributes: new { @class = "form-control" })
-                    }
-                }*@
+                            @Html.DisplayFor(model => model.Member.UserName)
+                            @ViewBag.UserName
+                        } else {
+                            @Html.DropDownList("MemberId", null, htmlAttributes: new { @class = "form-control" })
+                        }
+                    }*@
                 @Html.DropDownList("MemberId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.MemberId, "", new { @class = "text-danger" })
             </div>
@@ -86,10 +86,10 @@
             </div>
         </div>
     </div>
-                    }
+}
 
 <div>
-    @Html.ActionLink("Tillbaka till fordonslistan", "AllVehicles")
+    @Html.ActionLink("Registrera ny medlem", "Register", "Members25")
 </div>
 
 @section Scripts {

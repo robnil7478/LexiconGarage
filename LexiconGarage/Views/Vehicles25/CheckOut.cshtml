@@ -48,7 +48,7 @@
         <div class="form-actions no-color">
             <input type="submit" value="Checka ut" class="btn btn-default" />
             <br /><br /><br />
-            @Html.ActionLink("Tillbaka till fordonslistan", "AllVehicles")
+            @Html.ActionLink("Till medlemsinfo", "Details", "Members25", new { id = Model.MemberId }, null)
         </div>
     }
 </div>
