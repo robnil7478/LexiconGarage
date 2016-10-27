@@ -7,44 +7,60 @@
 <h2>Medlemsinformation</h2>
 
 <div>
-    @*<h4>Medlem</h4>*@
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
+        <dt>@Html.DisplayNameFor(model => model.UserName)</dt>
+        <dd>@Html.DisplayFor(model => model.UserName)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
+        <dt>@Html.DisplayNameFor(model => model.Name)</dt>
+        <dd>@Html.DisplayFor(model => model.Name)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+        <dt>@Html.DisplayNameFor(model => model.TelNumber)</dt>
+        <dd>@Html.DisplayFor(model => model.TelNumber)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TelNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TelNumber)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-
+        <dt>@Html.DisplayNameFor(model => model.Address)</dt>
+        <dd>@Html.DisplayFor(model => model.Address)</dd>
     </dl>
 </div>
+@{
+    var count = Model.NumberOfVehicles;
+    if (count == 0) {
+        <tr><td colspan="10">Har inga fordon i garaget</td></tr>
+    } else {
+        if (count > 3) {
+            var first = Model.Vehicles.First();
+            <tr><td colspan="10">Antal parkerade fordon: @count</td></tr>
+        }
+        <table class="table table-bordered table-condensed table-striped table-hover sortable">
+            <thead>
+                <tr>
+                    @*<th data-defaultsign="AZ">@Html.DisplayNameFor(typeof(VehicleType.TypeInSwedish))</th>*@
+                    <th data-defaultsign="AZ">Fordonstyp</th>
+                    @*<th data-defaultsign="AZ">@Html.DisplayNameFor(typeof(Vehicle.RegNo))</th>*@
+                    <th data-defaultsign="AZ">Reg.nr</th>
+                    @*<th data-defaultsign="AZ">@Html.DisplayNameFor(typeof(Vehicle.ParkingTime))</th>*@
+                    <th data-defaultsign="AZ">Parkerades</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            @foreach (var item in Model.Vehicles) {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.VehicleType.TypeInSwedish)</td>
+                    <td>@Html.DisplayFor(modelItem => item.RegNo)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ParkingTime)</td>
+                    <td>
+                        @Html.ActionLink("Ändra", "Edit", "Vehicles25", new { id = item.Id }, null) |
+                        @Html.ActionLink("Info", "Details", "Vehicles25", new { id = item.Id }, null) |
+                        @Html.ActionLink("Checka ut", "CheckOut", "Vehicles25", new { id = item.Id }, null)
+                    </td>
+                </tr>
+            }
+
+        </table>
+    }
+}
 <p>
-    @Html.ActionLink("Ändra", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Ändra medlemsinfo", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Tillbaka till medlemslistan", "Index")
 </p>

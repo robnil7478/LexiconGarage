@@ -26,5 +26,10 @@ namespace LexiconGarage.Models {
 
         [Display(Name = "Parkerade fordon")]
         public virtual List<Vehicle> Vehicles { get; set; }
+
+        [Display(Name = "Antal fordon")]
+        public virtual int NumberOfVehicles {
+            get { return Vehicles == null ? 0 : Vehicles.Count; }
+        }
     }
 }
