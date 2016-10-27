@@ -16,7 +16,7 @@ namespace LexiconGarage
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Garage", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Vehicles25", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

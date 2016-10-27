@@ -312,6 +312,8 @@
     <Content Include="Views\VehicleTypes25\Index.cshtml" />
     <Content Include="Views\Vehicles25\Search.cshtml" />
     <Content Include="Views\Vehicles25\Receipt.cshtml" />
+    <Content Include="Views\Vehicles25\Index.cshtml" />
+    <Content Include="Views\Vehicles25\About.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
