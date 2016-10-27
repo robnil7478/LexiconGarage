@@ -61,14 +61,30 @@ namespace LexiconGarage.Controllers {
             return View(vehicle);
         }
 
-        // GET: Vehicles25/Create
+        // GET: Vehicles25/CheckInForMember
+        public ActionResult CheckInForMember([Bind(Include = "MemberId")] Vehicle vehicle) {
+            var UserName = db.Members.Where(m => m.Id == vehicle.MemberId).Select(m => m.UserName).FirstOrDefault();
+            if (UserName != null) {
+                ViewBag.UserName = UserName;
+                ViewBag.MemberFixed = true;
+            }
+            else {
+                ViewBag.MemberFixed = false;
+                ViewBag.MemberId = new SelectList(db.Members, "Id", "UserName");
+            }
+            ViewBag.VehicleTypeId = new SelectList(db.VehicleTypes, "Id", "TypeInSwedish");
+            return View("CheckIn", vehicle);
+        }
+
+        // GET: Vehicles25/CheckIn
         public ActionResult CheckIn() {
+            ViewBag.MemberFixed = false;
             ViewBag.MemberId = new SelectList(db.Members, "Id", "UserName");
             ViewBag.VehicleTypeId = new SelectList(db.VehicleTypes, "Id", "TypeInSwedish");
             return View();
         }
 
-        // POST: Vehicles25/Create
+        // POST: Vehicles25/CheckIn
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -79,7 +95,7 @@ namespace LexiconGarage.Controllers {
                 if (!RegNoAlreadyCheckedIn(vehicle.RegNo)) {
                     db.Vehicles.Add(vehicle);
                     db.SaveChanges();
-                    return RedirectToAction("AllVehicles");
+                    return RedirectToAction("Details", new { id = vehicle.Id });
                 } else {
                     ViewBag.ErrorMessage = "Felmeddelande: Det finns redan ett fordon " +
                         "med registreringsnummer " + vehicle.RegNo + " registrerat.";
@@ -120,7 +136,7 @@ namespace LexiconGarage.Controllers {
                     vehicle.ParkingTime = oldParkTime;
                     db.Entry(vehicle).State = EntityState.Modified;
                     db.SaveChanges();
-                    return RedirectToAction("AllVehicles");
+                    return RedirectToAction("Details", new { id = vehicle.Id });
                 }
                 ViewBag.ErrorMessage = "Felmeddelande: Det finns redan ett fordon " +
                         "med registreringsnummer " + vehicle.RegNo + " registrerat.";

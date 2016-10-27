@@ -53,7 +53,7 @@ namespace LexiconGarage.Controllers
             {
                 db.Members.Add(member);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { Id = member.Id });
             }
 
             return View(member);
@@ -85,7 +85,7 @@ namespace LexiconGarage.Controllers
             {
                 db.Entry(member).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { Id = member.Id });
             }
             return View(member);
         }
