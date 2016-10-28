@@ -15,8 +15,46 @@ namespace LexiconGarage.Controllers {
 
         // GET: Members25
         public ActionResult Index() {
-            return View(db.Members.ToList());
+            var allMembers = db.Members.ToList();
+            var tuple = new Tuple<IEnumerable<Member>, Member>(allMembers, new Member());
+            return View("Index", tuple);
         }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AllMembersSearch([Bind(Include = "Id,UserName, Name, TelNumber, Address")] Member member)
+        {
+            string strUserName = string.IsNullOrEmpty(Request.Form["Item2.UserName"]) ? "" : Request.Form["Item2.UserName"];
+            string strName = string.IsNullOrEmpty(Request.Form["Item2.Name"]) ? "" : Request.Form["Item2.Name"];
+
+            if (member == null)
+            {
+                member = new Member();
+            }
+            // Populerar sök-värdena till vehicle-ojektet, då behåller vi användarens inmatade värden då Search-sidan återladdas med resultatlistan/tabellen 
+            member.UserName = string.IsNullOrEmpty(strUserName) ? "" : strUserName;
+            member.Name = string.IsNullOrEmpty(strName) ? "" : strName;
+
+            var subsetListOfMembers = DoSearch(strUserName, strName);
+
+            var tuple = new Tuple<IEnumerable<Member>, Member>(subsetListOfMembers, member);
+            ViewBag.SearchTableInfo = "Antal matchande poster: " + subsetListOfMembers.Count.ToString();
+            return View("Index", tuple);
+        }
+
+
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AllMembersResetSearch(string userName)
+        {
+            var anEmptyList = new List<Member>();  
+            var tuple = new Tuple<IEnumerable<Member>, Member>(anEmptyList, new Member());
+            return View("Index", tuple);
+        }
+
+
 
         // GET: Members25/Details/5
         public ActionResult Details(int? id) {
@@ -115,6 +153,20 @@ namespace LexiconGarage.Controllers {
             ViewBag.InfoMessage = "Medlemmen '" + userName + "' har avregistrerats.";
             return View("Index", db.Members.ToList());
         }
+
+        public List<Member> DoSearch(string strUserName, string strName)
+        {
+            var subsetListOfVehicles = new List<Member>();
+
+            if (strUserName.Length > 0 || strName.Length > 0)
+                subsetListOfVehicles = (from x in db.Members.ToList()
+                                        where   x.UserName.ToString().ToUpper().Contains(strUserName.ToUpper()) &&
+                                                x.Name.ToString().ToUpper().Contains(strName.ToUpper())
+                                        select x).ToList();
+
+            return subsetListOfVehicles;
+        }
+
 
         protected override void Dispose(bool disposing) {
             if (disposing) {

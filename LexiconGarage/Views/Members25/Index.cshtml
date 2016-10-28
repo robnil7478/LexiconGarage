@@ -1,4 +1,4 @@
-﻿@model IEnumerable<LexiconGarage.Models.Member>
+﻿@model Tuple<IEnumerable<LexiconGarage.Models.Member>, LexiconGarage.Models.Member>
 
 @{
     ViewBag.Title = "Index";
@@ -13,23 +13,63 @@
     @Html.ActionLink("Registrera ny medlem", "Register")
 </p>
 
-@if (Model.Count() == 0) {
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Item2.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Item2.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Item2.UserName, new { @class = "form-control", @autofocus = "autofocus", @id = "memberInput", @name = "userName" })
+                @Html.ValidationMessageFor(model => model.Item2.UserName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Item2.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Item2.Name, new { @class = "form-control", @autofocus = "autofocus", @id = "memberInput", @name = "name" })
+                @Html.ValidationMessageFor(model => model.Item2.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @*<input type="submit" class="btn btn-default" id="searchButton" value="Sök" />*@
+                @*<input type="submit" class="btn btn-default" id="allButton" value="Lista alla fordon" />*@
+                <input formaction="@Url.Action("AllMembersSearch","Members25")" type="submit" class="btn btn-default" id="searchButton" value="Sök" />
+                <input formaction="@Url.Action("Index","Members25")" type="submit" class="btn btn-default" id="allButton" value="Lista alla medlemmar" />
+                <input formaction="@Url.Action("AllMembersResetSearch","Members25",new { viewName="AllMembers"})" type="submit" class="btn btn-default" id="resetButton" value="Rensa" />
+                <br /><br />
+            </div>
+        </div>
+
+
+    </div>
+}
+
+
+@if (Model.Item1.Count() == 0) {
     <tr><td colspan="10">Listan är tom</td></tr>
-} else if (Model.Count() > 0) {
-    <tr><td colspan="10">Antal medlemmar: @Model.Count()</td></tr>
+} else if (Model.Item1.Count() > 0) {
+    <tr><td colspan="10">Antal medlemmar: @Model.Item1.Count()</td></tr>
     <table class="table table-bordered table-condensed table-striped table-hover sortable">
         <thead>
             <tr>
-                <th data-defaultsign="AZ">@Html.DisplayNameFor(model => model.UserName)</th>
-                <th data-defaultsign="AZ">@Html.DisplayNameFor(model => model.Name)</th>
-                <th data-defaultsign="AZ">@Html.DisplayNameFor(model => model.TelNumber)</th>
-                <th data-defaultsign="AZ">@Html.DisplayNameFor(model => model.Address)</th>
+                <th data-defaultsign="AZ">@Html.DisplayNameFor(model => model.Item2.UserName)</th>
+                <th data-defaultsign="AZ">@Html.DisplayNameFor(model => model.Item2.Name)</th>
+                <th data-defaultsign="AZ">@Html.DisplayNameFor(model => model.Item2.TelNumber)</th>
+                <th data-defaultsign="AZ">@Html.DisplayNameFor(model => model.Item2.Address)</th>
                 <th></th>
             </tr>
         </thead>
 
  
-            @foreach (var item in Model) {
+            @foreach (var item in Model.Item1) {
                 <tr>
                     <td>@Html.DisplayFor(modelItem => item.UserName)</td>
                     <td>@Html.DisplayFor(modelItem => item.Name)</td>
