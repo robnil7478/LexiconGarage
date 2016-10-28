@@ -65,7 +65,7 @@
 <p>
     <br />
     @Html.ActionLink("Ändra medlemsinfo", "Edit", new { id = Model.Id })
-    @*| @Html.ActionLink("Parkera fordon", "CheckInForMember", "Vehicles25", new { MemberId = Model.Id }, null)     XXXXX  *@
+  | @Html.ActionLink("Parkera fordon", "CheckIn", "Vehicles25", new { id = Model.Id }, null)
     @{ if (Model.NumberOfVehicles == 0) 
             {
               <span> | @Html.ActionLink("Avregistrera", "Unregister", new { id = Model.Id })</span>

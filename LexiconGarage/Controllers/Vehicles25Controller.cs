@@ -15,7 +15,8 @@ namespace LexiconGarage.Controllers {
 
         // GET: Vehicles25
         public ActionResult Index() {
-            return View();
+            var model = new Garage(db);
+            return View(model);
         }
 
         public ActionResult About() {
@@ -70,26 +71,34 @@ namespace LexiconGarage.Controllers {
         }
 
         // GET: Vehicles25/CheckInForMember
-        public ActionResult CheckInForMember([Bind(Include = "MemberId")] Vehicle vehicle) {
-            var UserName = db.Members.Where(m => m.Id == vehicle.MemberId).Select(m => m.UserName).FirstOrDefault();
-            if (UserName != null) {
-                ViewBag.UserName = UserName;
-                ViewBag.MemberFixed = true;
-            }
-            else {
-                ViewBag.MemberFixed = false;
-                ViewBag.MemberId = new SelectList(db.Members, "Id", "UserName");
-            }
-            ViewBag.VehicleTypeId = new SelectList(db.VehicleTypes, "Id", "TypeInSwedish");
-            return View("CheckIn", vehicle);
-        }
+        //public ActionResult CheckInForMember([Bind(Include = "MemberId")] Vehicle vehicle) {
+        //    var UserName = db.Members.Where(m => m.Id == vehicle.MemberId).Select(m => m.UserName).FirstOrDefault();
+        //    if (UserName != null) {
+        //        ViewBag.UserName = UserName;
+        //        ViewBag.MemberFixed = true;
+        //    }
+        //    else {
+        //        ViewBag.MemberFixed = false;
+        //        ViewBag.MemberId = new SelectList(db.Members, "Id", "UserName");
+        //    }
+        //    ViewBag.VehicleTypeId = new SelectList(db.VehicleTypes, "Id", "TypeInSwedish");
+        //    return View("CheckIn", vehicle);
+        //}
 
         // GET: Vehicles25/CheckIn
-        public ActionResult CheckIn() {
-            ViewBag.MemberFixed = false;
-            ViewBag.MemberId = new SelectList(db.Members, "Id", "UserName");
-            ViewBag.VehicleTypeId = new SelectList(db.VehicleTypes, "Id", "TypeInSwedish");
-            return View();
+        public ActionResult CheckIn(int? id) {
+            if (new Garage(db).EmptySlots() != 0) {
+                if (id == null) {
+                    ViewBag.MemberId = new SelectList(db.Members, "Id", "UserName");
+                } else {
+                    ViewBag.MemberId = new SelectList(db.Members, "Id", "UserName", id);
+                }
+                ViewBag.VehicleTypeId = new SelectList(db.VehicleTypes, "Id", "TypeInSwedish");
+                return View();
+            } else {
+                ViewBag.ErrorMessage = "Det finns inga lediga platser i garaget.";
+                return View("Index", new Garage(db));
+            }
         }
 
         // POST: Vehicles25/CheckIn

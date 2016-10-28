@@ -29,10 +29,10 @@ textarea {
 }
 
 
-tr{
-    /* height: 20px; */
+/*tr{
+     height: 20px; 
 
-}
+}*/
 
 p.table-info {
     font-weight: 900;
@@ -45,12 +45,14 @@ td.table-info{
 }
 
 .error-message {
-    float: right;
+    /*float: right;*/
+    /*align-content: center;*/
     color: #b94a48;
 }
 
 .info-message {
-    float: right;
+    /*float: right;*/
+    /*align-content: center;*/
     color: #27b768;
 }
 
