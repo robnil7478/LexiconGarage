@@ -25,8 +25,11 @@ namespace LexiconGarage.Controllers {
 
         // GET: Vehicles25/AllVehicles
         public ActionResult AllVehicles() {
+            ViewBag.VBagVehicleList = new SelectList(db.VehicleTypes, "Id", "TypeInSwedish", 0);
             var vehicles = db.Vehicles.Include(v => v.Member).Include(v => v.VehicleType);
-            return View(vehicles.ToList());
+            var tuple = new Tuple<IEnumerable<Vehicle>, Vehicle>(vehicles, new Vehicle());
+
+            return View("AllVehicles", tuple);
         }
 
 
@@ -36,24 +39,73 @@ namespace LexiconGarage.Controllers {
         public ActionResult AllVehicles(string RegNo, string brand, string color)
         {
             var allVehicles = db.Vehicles.ToList();
-            var dictVehicleTypes = new Dictionary<int, string>();
 
             ViewBag.SearchTableInfo = "Totalt antal fordon i garaget: " + allVehicles.Count.ToString();
             ViewBag.VBagVehicleList = new SelectList(db.VehicleTypes, "Id", "TypeInSwedish");
-            var tuple = new Tuple<IEnumerable<Vehicle>, Vehicle, Dictionary<int, string>>(allVehicles, new Vehicle(), dictVehicleTypes);
-            return View("Search", tuple);
+            var tuple = new Tuple<IEnumerable<Vehicle>, Vehicle>(allVehicles, new Vehicle());
+            return View("AllVehicles", tuple);
         }
 
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AllVehiclesSearch([Bind(Include = "Id,VehicleTypeId,RegNo,MemberId,NumberOfWheels,Brand,Model,Weight,ParkingSlot")] Vehicle vehicle)
+        {
+            int intVehicleTypeId = 0;
+            bool result = false;
+            string strRegNo = string.IsNullOrEmpty(Request.Form["Item2.RegNo"]) ? "" : Request.Form["Item2.RegNo"];
+            string strUserName = string.IsNullOrEmpty(Request.Form["Item2.Member.UserName"]) ? "" : Request.Form["Item2.Member.UserName"];
+            string strBrand = string.IsNullOrEmpty(Request.Form["Item2.Brand"]) ? "" : Request.Form["Item2.Brand"];            
+            string strType = Request.Form["VBagVehicleList"];
+
+            if (vehicle != null)
+            {
+                vehicle = new Vehicle();
+                vehicle.Member = new Member();
+            }
+            // Populerar sök-värdena till vehicle-ojektet, då behåller vi användarens 
+            // inmatade värden då Search-sidan återladdas med resultatlistan/tabellen 
+            vehicle.RegNo = string.IsNullOrEmpty(strRegNo) ? "" : strRegNo;
+            vehicle.Brand = string.IsNullOrEmpty(strBrand) ? "" : strBrand;
+            vehicle.Member.UserName = string.IsNullOrEmpty(strUserName) ? "" : strUserName;
+            // VehicleType
+            strType = (string.IsNullOrEmpty(strType) || strType.Equals("0")) ? "" : strType;
+            result = Int32.TryParse(strType, out intVehicleTypeId);
+            if (result)
+            {
+                vehicle.VehicleType = db.VehicleTypes.Find(intVehicleTypeId);
+            }
+
+            var subsetListOfVehicles = DoSearch(strRegNo, strUserName, strBrand, strType, vehicle);
+
+            var tuple = new Tuple<IEnumerable<Vehicle>, Vehicle>(subsetListOfVehicles, vehicle);
+            ViewBag.SearchTableInfo = "Antal matchande poster: " + subsetListOfVehicles.Count.ToString();
+            ViewBag.VBagVehicleList = new SelectList(db.VehicleTypes, "Id", "TypeInSwedish", intVehicleTypeId);
+            return View("AllVehicles", tuple);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AllVehiclesResetSearch(string RegNo, string brand, string color)
+        {
+            //var TestRegNr = Request.Form["Item2.RegNo"]; 
+            //var view =  Request.Form["Item2.viewName"];
+
+            var anEmptyList = new List<Vehicle>();
+            ViewBag.VBagVehicleList = new SelectList(db.VehicleTypes, "Id", "TypeInSwedish");
+            var tuple = new Tuple<IEnumerable<Vehicle>, Vehicle>(anEmptyList, new Vehicle());
+            return View("AllVehicles", tuple);
+        }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult ResetSearch(string RegNo, string brand, string color)
-        {
+        {         
             var anEmptyList = new List<Vehicle>();
-            var dictVehicleTypes = new Dictionary<int, string>();
             ViewBag.VBagVehicleList = new SelectList(db.VehicleTypes, "Id", "TypeInSwedish");
-            var tuple = new Tuple<IEnumerable<Vehicle>, Vehicle, Dictionary<int, string>>(anEmptyList, new Vehicle(), dictVehicleTypes);
+            var tuple = new Tuple<IEnumerable<Vehicle>, Vehicle>(anEmptyList, new Vehicle());
             return View("Search", tuple);
         }
 
@@ -199,12 +251,14 @@ namespace LexiconGarage.Controllers {
             ViewBag.VBagVehicleList = new SelectList(listVehicleTypes, "Id", "TypeInSwedish");
 
             // @DropDownListFor() alt 2  <-- Används inte nu
-            var dictVehicleTypes = new Dictionary<int, string>();
+            //var dictVehicleTypes = new Dictionary<int, string>();
             //for (int i = 0; i < listVehicleTypes.Count; i++)
             //{
             //    dictVehicleTypes[i] = listVehicleTypes[i].TypeInSwedish;
             //}
-            var tuple = new Tuple<IEnumerable<Vehicle>, Vehicle, Dictionary<int, string>>(emptyVehicleList, new Vehicle(), dictVehicleTypes);
+            // ...och sedan
+            //  var tuple = new Tuple<IEnumerable<Vehicle>, Vehicle, Dictionary<int, string>>(emptyVehicleList, new Vehicle(), dictVehicleTypes);
+            var tuple = new Tuple<IEnumerable<Vehicle>, Vehicle>(emptyVehicleList, new Vehicle());
 
             ViewBag.SearchTableInfo = string.Empty;
             return View("Search", tuple);
@@ -214,13 +268,9 @@ namespace LexiconGarage.Controllers {
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult SearchVehicles([Bind(Include = "Id,VehicleTypeId,RegNo,MemberId,NumberOfWheels,Brand,Model,Weight,ParkingSlot")] Vehicle vehicle)
-        {           
-            int intVehicleTypeId;
-            var vehicleTypes = db.VehicleTypes.ToList();
-            var dictVehicleTypes = new Dictionary<int, string>();
+        {
+            int intVehicleTypeId = 0;
             bool result = false;
-
-            var subsetListOfVehicles = new List<Vehicle>();
             string strRegNo = Request.Form["Item2.RegNo"];
             string strUserName = Request.Form["Item2.Member.UserName"];
             string strBrand = Request.Form["Item2.Brand"];
@@ -236,14 +286,26 @@ namespace LexiconGarage.Controllers {
             vehicle.RegNo = string.IsNullOrEmpty(strRegNo) ? "" : strRegNo;
             vehicle.Brand = string.IsNullOrEmpty(strBrand) ? "" : strBrand;
             vehicle.Member.UserName = string.IsNullOrEmpty(strUserName) ? "" : strUserName;
-            // enum VehicleType med värde = 0 ('Ange fordonstyp') => söksträng 'strType' 
-            // ska ges värdet tomma strängen. 
+            // VehicleType
             strType = (string.IsNullOrEmpty(strType) || strType.Equals("0")) ? "" : strType;
             result = Int32.TryParse(strType, out intVehicleTypeId);
             if (result)
             {
                 vehicle.VehicleType = db.VehicleTypes.Find(intVehicleTypeId);
             }
+
+            var subsetListOfVehicles = DoSearch(strRegNo, strUserName, strBrand, strType, vehicle);
+
+            var tuple = new Tuple<IEnumerable<Vehicle>, Vehicle>(subsetListOfVehicles, vehicle);
+            ViewBag.SearchTableInfo = "Antal matchande poster: " + subsetListOfVehicles.Count.ToString();
+            ViewBag.VBagVehicleList = new SelectList(db.VehicleTypes, "Id", "TypeInSwedish", intVehicleTypeId);
+            return View("Search", tuple);
+        }
+
+
+        public List<Vehicle> DoSearch(string strRegNo, string strUserName, string strBrand, string strType, Vehicle vehicle)
+        {
+            var subsetListOfVehicles = new List<Vehicle>();      
 
             if (strRegNo.Length > 0 || strUserName.Length > 0 || strBrand.Length > 0 || strType.Length > 0)
                 subsetListOfVehicles = (from x in db.Vehicles.ToList()
@@ -253,12 +315,8 @@ namespace LexiconGarage.Controllers {
                                         x.RegNo.ToUpper().Contains(strRegNo.ToUpper())
                                         select x).ToList();
 
-            var tuple = new Tuple<IEnumerable<Vehicle>, Vehicle, Dictionary<int, string>>(subsetListOfVehicles, vehicle, dictVehicleTypes);
-            ViewBag.SearchTableInfo = "Antal matchande poster: " + subsetListOfVehicles.Count.ToString();
-            ViewBag.VBagVehicleList = new SelectList(db.VehicleTypes, "Id", "TypeInSwedish", intVehicleTypeId);
-            return View("Search", tuple);
+            return subsetListOfVehicles;
         }
-
 
 
         protected override void Dispose(bool disposing) {

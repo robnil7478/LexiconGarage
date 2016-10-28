@@ -1,11 +1,11 @@
 ﻿
-@model Tuple<IEnumerable<LexiconGarage.Models.Vehicle>, LexiconGarage.Models.Vehicle, Dictionary<int, string>>
+@model Tuple<IEnumerable<LexiconGarage.Models.Vehicle>, LexiconGarage.Models.Vehicle>
 
 @{
     ViewBag.Title = "Search";
 }
 
-<h3>Sök fordon i garaget</h3>
+<h3>Sök medlemmar eller fordon</h3>
 
 
 @using (Html.BeginForm())
@@ -47,9 +47,9 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Item2.VehicleType.TypeInSwedish, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("VBagVehicleList", null, "Välj fordon", htmlAttributes: new { @class = "form-control", @name = "type" })
-                @* Alternativ 2: @Html.DropDownListFor(model => model.Item3, new SelectList(Model.Item3, "Key", "Value"), "Välj fordon", htmlAttributes: new { @class = "dropdown-search", @id = "vehicleTypeInput", @name = "type" })*@
-                @Html.ValidationMessageFor(model => model.Item3, "", new { @class = "text-danger" })
+                @Html.DropDownList("VBagVehicleList", null, "", htmlAttributes: new { @class = "form-control", @name = "type" })
+                @* Alternativ 2 med 'Dictionary<int, string>' i @model: @Html.DropDownListFor(model => model.Item3, new SelectList(Model.Item3, "Key", "Value"), "Välj fordon", htmlAttributes: new { @class = "dropdown-search", @id = "vehicleTypeInput", @name = "type" })*@
+                @Html.ValidationMessageFor(model => model.Item2, "", new { @class = "text-danger" })
             </div>
         </div>
 
