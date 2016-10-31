@@ -24,14 +24,29 @@ namespace LexiconGarage.Controllers {
         }
 
         // GET: Vehicles25/AllVehicles
-        public ActionResult AllVehicles() {
+        public ActionResult AllVehicles()
+        {
             ViewBag.VBagVehicleList = new SelectList(db.VehicleTypes, "Id", "TypeInSwedish", 0);
             var vehicles = db.Vehicles.Include(v => v.Member).Include(v => v.VehicleType);
+            ViewBag.SearchTableInfo = "Totalt antal fordon i garaget: " + vehicles.ToList().Count.ToString();
             var tuple = new Tuple<IEnumerable<Vehicle>, Vehicle>(vehicles, new Vehicle());
 
             return View("AllVehicles", tuple);
         }
 
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AllVehiclesParked(string RegNo, string brand, string color)
+        {
+            var allVehicles = db.Vehicles.ToList();
+
+            ViewBag.SearchTableInfo = "Totalt antal fordon i garaget: " + allVehicles.Count.ToString();
+            ViewBag.VBagVehicleList = new SelectList(db.VehicleTypes, "Id", "TypeInSwedish");
+            var tuple = new Tuple<IEnumerable<Vehicle>, Vehicle>(allVehicles, new Vehicle());
+            return View("AllVehicles", tuple);
+        }
 
 
         [HttpPost]
@@ -43,7 +58,7 @@ namespace LexiconGarage.Controllers {
             ViewBag.SearchTableInfo = "Totalt antal fordon i garaget: " + allVehicles.Count.ToString();
             ViewBag.VBagVehicleList = new SelectList(db.VehicleTypes, "Id", "TypeInSwedish");
             var tuple = new Tuple<IEnumerable<Vehicle>, Vehicle>(allVehicles, new Vehicle());
-            return View("AllVehicles", tuple);
+            return View("Search", tuple);
         }
 
 

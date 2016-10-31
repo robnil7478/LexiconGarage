@@ -40,7 +40,7 @@
                 @*<input type="submit" class="btn btn-default" id="searchButton" value="Sök" />*@
                 @*<input type="submit" class="btn btn-default" id="allButton" value="Lista alla fordon" />*@
                 <input formaction="@Url.Action("AllVehiclesSearch","Vehicles25")" type="submit" class="btn btn-default" id="searchButton" value="Sök" />
-                <input formaction="@Url.Action("AllVehicles","Vehicles25")" type="submit" class="btn btn-default" id="allButton" value="Lista alla fordon" />
+                <input formaction="@Url.Action("AllVehiclesParked","Vehicles25")" type="submit" class="btn btn-default" id="allButton" value="Lista alla fordon" />
                 <input formaction="@Url.Action("AllVehiclesResetSearch","Vehicles25",new { viewName="AllVehicles"})" type="submit" class="btn btn-default" id="resetButton" value="Rensa" />
                 <br /><br />
             </div>
@@ -51,10 +51,9 @@
 }
 
 
-@if (Model.Item1.Count() == 0) {
-    <tr><td colspan="10">Inga fordon i garaget</td></tr>
-} else if (Model.Item1.Count() > 0) {
-    <tr><td colspan="10">Antal fordon: @Model.Item1.Count()</td></tr>
+<p class="table-info">@ViewBag.SearchTableInfo</p>
+@if (Model.Item1.Count() > 0)
+{
     <table class="table table-bordered table-condensed table-striped table-hover sortable">
         <thead>
             <tr>

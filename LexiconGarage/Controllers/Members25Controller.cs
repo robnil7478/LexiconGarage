@@ -16,6 +16,7 @@ namespace LexiconGarage.Controllers {
         // GET: Members25
         public ActionResult Index() {
             var allMembers = db.Members.ToList();
+            ViewBag.SearchTableInfo = "Totalt antal medlemmar: " + allMembers.Count.ToString();
             var tuple = new Tuple<IEnumerable<Member>, Member>(allMembers, new Member());
             return View("Index", tuple);
         }

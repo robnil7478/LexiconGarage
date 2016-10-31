@@ -53,10 +53,9 @@
 }
 
 
-@if (Model.Item1.Count() == 0) {
-    <tr><td colspan="10">Listan är tom</td></tr>
-} else if (Model.Item1.Count() > 0) {
-    <tr><td colspan="10">Antal medlemmar: @Model.Item1.Count()</td></tr>
+<p class="table-info">@ViewBag.SearchTableInfo</p>
+@if (Model.Item1.Count() > 0)
+{
     <table class="table table-bordered table-condensed table-striped table-hover sortable">
         <thead>
             <tr>
