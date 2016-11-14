@@ -7,7 +7,7 @@ using System.Web;
 namespace LexiconGarage.Models {
     public class Garage {
 
-        static readonly int MaxSlots = 14;
+        static readonly int MaxSlots = 22;
         static readonly int HourPrice = 60;
         public int TotalSlots { get { return totalSlots; } }
         public int Price { get { return price; } }

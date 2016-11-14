@@ -24,14 +24,30 @@
         <dd>@Html.DisplayFor(model => model.Address)</dd>
     </dl>
 </div>
+<p>
+    @Html.ActionLink("Ändra medlemsinfo", "Edit", new { id = Model.Id })
+    | @Html.ActionLink("Parkera fordon", "CheckIn", "Vehicles25", new { id = Model.Id }, null)
+    @{ if (Model.NumberOfVehicles == 0)
+        {
+            <span> | @Html.ActionLink("Avregistrera", "Unregister", new { id = Model.Id })</span>
+        }
+    }
+</p>
+
+<br />
+<br />
 @{
     var count = Model.NumberOfVehicles;
-    if (count == 0) {
-        <tr><td colspan="10">Har inga fordon i garaget</td></tr>
-    } else {
-        if (count > 3) {
+    if (count == 0)
+    {
+        <p class="table-info">Har inga fordon i garaget</p>
+    }
+    else
+    {
+        if (count > 3)
+        {
             var first = Model.Vehicles.First();
-            <tr><td colspan="10">Antal parkerade fordon: @count</td></tr>
+            <p class="table-info">Antal parkerade fordon: @count</p>
         }
         <table class="table table-bordered table-condensed table-striped table-hover sortable">
             <thead>
@@ -62,13 +78,4 @@
         </table>
     }
 }
-<p>
-    <br />
-    @Html.ActionLink("Ändra medlemsinfo", "Edit", new { id = Model.Id })
-  | @Html.ActionLink("Parkera fordon", "CheckIn", "Vehicles25", new { id = Model.Id }, null)
-    @{ if (Model.NumberOfVehicles == 0) 
-            {
-              <span> | @Html.ActionLink("Avregistrera", "Unregister", new { id = Model.Id })</span>
-            } 
-    }
-</p>
+
